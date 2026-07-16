@@ -156,3 +156,39 @@ This version:
 - removes reliance on the external psychedelic asset requests
 - includes a visible warm-color fallback to confirm the mode loaded
 - preserves the Normal page and Escape Reality / End Trip navigation
+
+
+## V17.1 — revised directly from V16.3
+
+- Removed the shared left-to-right single-pan sweep
+- Applied more of Photo 2's soft folding color-shift treatment across the set
+- Kept Photo 1 super-saturated and continuously multicolored
+- Preserved Photo 3's pattern and movement
+- Replaced Photo 4's rays with spirals
+- Applied stronger Photo 2-style color shifting to Photo 5
+- Blended Photo 3's patterned motion with Photo 2's color shift on Photo 6
+
+
+## V17.2 — restored Photos 4–6
+
+- Added more organic movement to Photo 1 while keeping the saturated rainbow
+- Removed the diagonal stripe overlays from Photos 4, 5, and 6
+- Restored Photo 4's V16.3 kaleidoscope treatment
+- Restored Photo 5's V16.3 radial/spiral treatment
+- Restored Photo 6's V16.3 colored blob treatment
+- Added a center-origin irregular color sweep to Photo 6
+- Kept the horizontal shared sweeps removed
+
+
+## V18
+
+- Photo 4 now uses the same saturated rainbow treatment as Photo 1
+- Photo 5 now uses Photo 2's wave/color-shift base plus Photo 4's rainbow treatment layered on top
+- Photo 6 keeps the same structure as V17.2 but is more saturated and stronger
+
+
+## V19
+
+- Left Photos 1, 2, 3, and 6 unchanged
+- Photo 4 now uses the same rainbow treatment as Photo 1, but out of phase and with a different color-grade loop
+- Photo 5 now combines Photo 2's wave/color-shift base with Photo 3's prism/bullseye overlay
