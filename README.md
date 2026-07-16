@@ -370,15 +370,16 @@ Phone-sized psychedelic mode changes:
 - Normal mode and desktop psychedelic mode are unchanged
 
 
-## V24.2.10 — fade transition + synchronized page position
+## V24.2.11 — direct crossfade + reliable scroll synchronization
 
-Built from the uploaded V24.2.7 mobile thermal version.
+Built directly from the user-provided V24.2.7 mobile thermal pass.
 
-Changes:
-- Clicking `Escape Reality` fades the Normal page out and the psychedelic page in
-- Clicking `End Trip` fades the psychedelic page out and the Normal page in
-- The destination restores the same vertical location on the page
-- Uses exact scroll position when page heights match and proportional position as a fallback
-- Handles browser back-forward cache restoration
-- Added intrinsic image dimensions to the Normal page to prevent layout shift during restoration
-- No psychedelic visual effects were changed
+Changes only to mode switching:
+- Uses cross-document View Transitions for a direct page-to-page crossfade
+- Removed the fade-to-black behavior
+- Transfers location through URL parameters instead of relying only on session storage
+- Maps the viewport to matching header/photo/contact anchors on the destination page
+- Reapplies the destination scroll position during image decoding and late layout
+- Added intrinsic dimensions to Normal-page photos to prevent layout shifts during restoration
+- Cleans the temporary transition parameters from the URL after arrival
+- No psychedelic effects were changed
