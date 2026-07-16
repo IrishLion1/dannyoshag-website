@@ -292,3 +292,72 @@ is unnecessary at a given moment:
 - Pauses all animation work while the browser tab/page is hidden
 - Adds paint containment to each photo frame to reduce repaint spillover
 - Leaves the Normal page unchanged
+
+
+## V24.2 — Photo 3 animated neon texture mapping
+
+Built from V24.
+
+Only Photo 3 was changed:
+- Added an animated RGB component-transfer filter for Photo 3 (`curve-crushed-photo3`)
+- The crushed neon texture mapping now morphs, crawls, expands/contracts, and ripples over time
+- Added a small extra hue/opacity drift on the existing Photo 3 prism overlay
+- No other photos changed
+- No global layout or asset changes
+
+
+## V24.2.1 — Photo 3 roped back
+
+Built from V24.2.
+
+Only Photo 3 was changed:
+- Kept the animated RGB-curve modulation
+- Reduced the saturation / contrast boost on the image
+- Reduced drop-shadow channel separation
+- Reduced the RGB curve morph, crawl, drift, and ripple amplitudes
+- Reduced the extra prism overlay intensity
+- Left every other photo unchanged
+
+
+## V24.2.3 — Photo 4 bold shards
+
+Built from V24.2.1.
+
+Only Photo 4 was changed:
+- Replaced the previous animation overlay on Photo 4
+- New direction is bold and drastic rather than subtle
+- Uses aggressive prismatic color shards instead of ball/explosion shapes
+- Adds animated contour/interference motion on top
+- No other photos changed
+
+
+## V24.2.4 — Photo 4 bullseye zoom + bold color
+
+Built from V24.2.3.
+
+Only Photo 4 was changed:
+- The bullseye / contour layer now zooms in and out instead of drifting around
+- The bullseye color treatment is much bolder and more saturated
+- The shard layer and other photos remain unchanged
+
+
+## V24.2.5 — Photo 4 full-frame bullseye zoom
+
+Built from V24.2.4.
+
+Only the Photo 4 bullseye layer was changed:
+- Enlarged the overlay far beyond the photo frame
+- Raised the minimum zoom level so its rectangular edges never become visible
+- Kept the zooming motion and bold color shift
+- No other effects or photos changed
+
+
+## V24.2.6 — jazzier image motion
+
+Built from V24.2.5.
+
+Only the general image-motion layer was changed:
+- Replaced the old predictable shake pattern with a more irregular motion cycle
+- Gave each hero/gallery image its own duration and delay so they feel less synchronized
+- Kept all photo-specific color/effect stacks intact
+- Left Photo 3 and Photo 4 custom work in place

@@ -3175,6 +3175,378 @@ body.psy-page-hidden .psy-frame::after {
 }
 </style>
 
+
+<style id="v24-2-photo3-override">
+/* V24.2 — Photo 3 only
+   Replace Photo 3's static crushed-color filter with an animated version
+   so the neon texture mapping shifts and ripples over time.
+*/
+.gallery-row .psy-frame:nth-child(1) img,
+.pattern-prisms img {
+    filter:
+        url("#curve-crushed-photo3")
+        saturate(1.38)
+        contrast(1.16)
+        brightness(1.03)
+        drop-shadow(10px 0 0 rgba(255, 0, 190, .24))
+        drop-shadow(-5px 0 0 rgba(0, 235, 255, .10)) !important;
+}
+
+.pattern-prisms::after {
+    animation:
+      prism-spin 22s linear infinite reverse,
+      prism-scale 8s ease-in-out infinite alternate,
+      v24-2-prism-color-drift 9.6s linear infinite !important;
+}
+
+@keyframes v24-2-prism-color-drift {
+    0% {
+        filter: saturate(1.10) contrast(1.05) hue-rotate(0deg);
+        opacity: .42;
+    }
+    25% {
+        filter: saturate(1.20) contrast(1.10) hue-rotate(70deg);
+        opacity: .52;
+    }
+    50% {
+        filter: saturate(1.28) contrast(1.12) hue-rotate(150deg);
+        opacity: .60;
+    }
+    75% {
+        filter: saturate(1.18) contrast(1.08) hue-rotate(245deg);
+        opacity: .50;
+    }
+    100% {
+        filter: saturate(1.10) contrast(1.05) hue-rotate(360deg);
+        opacity: .42;
+    }
+}
+</style>
+
+
+<style id="v24-2-3-photo4-bold-shards">
+/* V24.2.3 — Photo 4 only
+   Keep it bold and drastic, but replace the current ball/explosion motion
+   with aggressive prismatic shards + animated contour interference.
+   No other photos are changed.
+*/
+
+.gallery-row .psy-frame:nth-child(2) img,
+.pattern-kaleidoscope img {
+    filter:
+        grayscale(1)
+        contrast(1.28)
+        brightness(1.06)
+        drop-shadow(12px 0 0 rgba(255, 20, 170, .17))
+        drop-shadow(-12px 0 0 rgba(0, 225, 255, .17)) !important;
+    animation: v2423-photo4-image-tilt 6.2s ease-in-out infinite alternate !important;
+    transform-origin: 50% 50%;
+}
+
+.gallery-row .psy-frame:nth-child(2)::before,
+.pattern-kaleidoscope::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    inset: -24% !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    opacity: .88 !important;
+    mix-blend-mode: screen !important;
+    border-radius: 18% !important;
+    background:
+        linear-gradient(128deg, transparent 0 18%, rgba(255,0,170,.00) 18%, rgba(255,0,170,.88) 27%, rgba(255,170,0,.74) 35%, rgba(255,255,255,.18) 39%, transparent 50%),
+        linear-gradient(66deg, transparent 0 26%, rgba(0,225,255,.00) 26%, rgba(0,225,255,.86) 36%, rgba(90,255,120,.52) 43%, transparent 58%),
+        linear-gradient(164deg, transparent 0 40%, rgba(125,0,255,.00) 40%, rgba(125,0,255,.78) 48%, rgba(255,50,80,.54) 56%, transparent 67%),
+        linear-gradient(96deg, transparent 0 54%, rgba(255,225,0,.00) 54%, rgba(255,225,0,.62) 62%, rgba(255,120,0,.42) 67%, transparent 76%) !important;
+    background-size: 180% 180%, 220% 220%, 200% 200%, 160% 160% !important;
+    filter: blur(9px) saturate(2.35) contrast(1.22) !important;
+    animation:
+        v2423-photo4-shards 7.8s cubic-bezier(.55,.08,.34,.98) infinite,
+        v2423-photo4-shard-hue 10.4s linear infinite !important;
+}
+
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    inset: -12% !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
+    opacity: .72 !important;
+    mix-blend-mode: color-dodge !important;
+    border-radius: 0 !important;
+    background:
+        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.12) 0 3px, rgba(255,255,255,0) 3px 18px),
+        repeating-linear-gradient(112deg, rgba(255,0,170,.16) 0 10px, rgba(255,0,170,0) 10px 38px, rgba(0,225,255,.16) 38px 48px, rgba(0,225,255,0) 48px 78px),
+        linear-gradient(140deg, rgba(255,225,0,.18), rgba(125,0,255,.18)) !important;
+    background-size: 135% 135%, 170% 170%, 100% 100% !important;
+    filter: blur(1.2px) saturate(2.0) contrast(1.18) !important;
+    animation:
+        v2423-photo4-contours 6.6s ease-in-out infinite,
+        v2423-photo4-contour-hue 9.2s linear infinite !important;
+}
+
+@keyframes v2423-photo4-image-tilt {
+    0% {
+        transform: scale(1) rotate(-.25deg);
+        filter:
+            grayscale(1)
+            contrast(1.22)
+            brightness(1.03)
+            drop-shadow(9px 0 0 rgba(255, 20, 170, .13))
+            drop-shadow(-9px 0 0 rgba(0, 225, 255, .13));
+    }
+    100% {
+        transform: scale(1.016) rotate(.35deg);
+        filter:
+            grayscale(1)
+            contrast(1.33)
+            brightness(1.08)
+            drop-shadow(14px 0 0 rgba(255, 20, 170, .20))
+            drop-shadow(-14px 0 0 rgba(0, 225, 255, .20));
+    }
+}
+
+@keyframes v2423-photo4-shards {
+    0% {
+        transform: translate(-10%, -8%) scale(.90) rotate(-20deg) skew(-6deg, 0deg);
+        background-position: 0% 22%, 18% 84%, 74% 20%, 10% 60%;
+        opacity: .78;
+    }
+    22% {
+        transform: translate(8%, -4%) scale(1.18) rotate(6deg) skew(5deg, -2deg);
+        background-position: 46% 8%, 78% 52%, 26% 70%, 44% 22%;
+        opacity: .96;
+    }
+    50% {
+        transform: translate(7%, 9%) scale(1.04) rotate(18deg) skew(-4deg, 3deg);
+        background-position: 100% 32%, 36% 14%, 8% 100%, 84% 54%;
+        opacity: .84;
+    }
+    78% {
+        transform: translate(-7%, 6%) scale(1.22) rotate(-8deg) skew(6deg, 1deg);
+        background-position: 62% 90%, 100% 24%, 58% 52%, 18% 96%;
+        opacity: .98;
+    }
+    100% {
+        transform: translate(-10%, -8%) scale(.90) rotate(340deg) skew(-6deg, 0deg);
+        background-position: 0% 22%, 18% 84%, 74% 20%, 10% 60%;
+        opacity: .78;
+    }
+}
+
+@keyframes v2423-photo4-shard-hue {
+    0% { filter: blur(9px) saturate(2.20) contrast(1.18) hue-rotate(0deg); }
+    50% { filter: blur(10px) saturate(2.55) contrast(1.26) hue-rotate(170deg); }
+    100% { filter: blur(9px) saturate(2.20) contrast(1.18) hue-rotate(360deg); }
+}
+
+@keyframes v2423-photo4-contours {
+    0% {
+        transform: translate(-4%, 1%) scale(.92) rotate(-8deg);
+        background-position: 10% 50%, 0% 0%, 0% 0%;
+        opacity: .54;
+    }
+    25% {
+        transform: translate(4%, -4%) scale(1.10) rotate(4deg);
+        background-position: 42% 48%, 40% 18%, 0% 0%;
+        opacity: .78;
+    }
+    55% {
+        transform: translate(5%, 5%) scale(1.18) rotate(13deg);
+        background-position: 86% 52%, 100% 54%, 0% 0%;
+        opacity: .86;
+    }
+    82% {
+        transform: translate(-6%, 3%) scale(1.02) rotate(-3deg);
+        background-position: 58% 62%, 68% 100%, 0% 0%;
+        opacity: .66;
+    }
+    100% {
+        transform: translate(-4%, 1%) scale(.92) rotate(-8deg);
+        background-position: 10% 50%, 0% 0%, 0% 0%;
+        opacity: .54;
+    }
+}
+
+@keyframes v2423-photo4-contour-hue {
+    0% { filter: blur(1.2px) saturate(1.9) contrast(1.12) hue-rotate(0deg); }
+    50% { filter: blur(1.8px) saturate(2.15) contrast(1.22) hue-rotate(180deg); }
+    100% { filter: blur(1.2px) saturate(1.9) contrast(1.12) hue-rotate(360deg); }
+}
+</style>
+
+
+<style id="v24-2-4-photo4-bullseye-zoom">
+/* V24.2.4 — Photo 4 only
+   Override the Photo 4 bullseye/contour layer so it zooms in and out
+   instead of drifting around, and make the color treatment much bolder.
+*/
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::after {
+    background:
+        repeating-radial-gradient(circle at 50% 50%,
+            rgba(255,255,255,.14) 0 3px,
+            rgba(255,0,170,.34) 3px 12px,
+            rgba(0,225,255,.00) 12px 18px,
+            rgba(0,225,255,.34) 18px 29px,
+            rgba(255,225,0,.00) 29px 35px,
+            rgba(255,225,0,.30) 35px 47px,
+            rgba(125,0,255,.00) 47px 54px,
+            rgba(125,0,255,.34) 54px 68px,
+            rgba(255,0,90,.00) 68px 76px,
+            rgba(255,0,90,.26) 76px 92px),
+        radial-gradient(circle at 50% 50%,
+            rgba(255,255,255,.12) 0 5%,
+            rgba(255,120,0,.22) 10%,
+            rgba(255,0,170,.26) 22%,
+            rgba(0,225,255,.22) 38%,
+            rgba(125,0,255,.22) 56%,
+            rgba(255,225,0,.18) 72%,
+            rgba(255,255,255,0) 100%),
+        linear-gradient(140deg, rgba(255,0,170,.22), rgba(0,225,255,.22), rgba(255,225,0,.20), rgba(125,0,255,.20)) !important;
+    background-size: 120% 120%, 100% 100%, 100% 100% !important;
+    background-position: 50% 50%, 50% 50%, 50% 50% !important;
+    opacity: .84 !important;
+    mix-blend-mode: color-dodge !important;
+    filter: blur(1.1px) saturate(2.45) contrast(1.28) !important;
+    animation:
+        v2424-photo4-bullseye-zoom 6.8s ease-in-out infinite,
+        v2424-photo4-bullseye-hue 8.6s linear infinite !important;
+}
+
+@keyframes v2424-photo4-bullseye-zoom {
+    0% {
+        transform: scale(.60) rotate(-6deg);
+        opacity: .56;
+    }
+    20% {
+        transform: scale(.95) rotate(3deg);
+        opacity: .82;
+    }
+    50% {
+        transform: scale(1.34) rotate(11deg);
+        opacity: .96;
+    }
+    78% {
+        transform: scale(.86) rotate(-4deg);
+        opacity: .72;
+    }
+    100% {
+        transform: scale(.60) rotate(354deg);
+        opacity: .56;
+    }
+}
+
+@keyframes v2424-photo4-bullseye-hue {
+    0% {
+        filter: blur(1.1px) saturate(2.20) contrast(1.20) hue-rotate(0deg);
+    }
+    25% {
+        filter: blur(1.4px) saturate(2.55) contrast(1.30) hue-rotate(80deg);
+    }
+    50% {
+        filter: blur(1.2px) saturate(2.75) contrast(1.34) hue-rotate(170deg);
+    }
+    75% {
+        filter: blur(1.5px) saturate(2.45) contrast(1.28) hue-rotate(265deg);
+    }
+    100% {
+        filter: blur(1.1px) saturate(2.20) contrast(1.20) hue-rotate(360deg);
+    }
+}
+</style>
+
+
+<style id="v24-2-5-photo4-fullframe-zoom">
+/* V24.2.5 — Photo 4 only
+   Keep the bullseye zoom, but make its layer substantially oversized so
+   the rectangular boundaries never enter the visible photograph.
+*/
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::after {
+    inset: -62% !important;
+    transform-origin: 50% 50% !important;
+    background-position: 50% 50%, 50% 50%, 50% 50% !important;
+    border-radius: 50% !important;
+    animation:
+        v2425-photo4-bullseye-fullframe 6.8s ease-in-out infinite,
+        v2424-photo4-bullseye-hue 8.6s linear infinite !important;
+}
+
+@keyframes v2425-photo4-bullseye-fullframe {
+    0% {
+        transform: scale(.92) rotate(-6deg);
+        opacity: .58;
+    }
+    20% {
+        transform: scale(1.08) rotate(3deg);
+        opacity: .82;
+    }
+    50% {
+        transform: scale(1.44) rotate(11deg);
+        opacity: .96;
+    }
+    78% {
+        transform: scale(1.02) rotate(-4deg);
+        opacity: .74;
+    }
+    100% {
+        transform: scale(.92) rotate(354deg);
+        opacity: .58;
+    }
+}
+</style>
+
+
+<style id="v24-2-6-jazzier-image-motion">
+/* V24.2.6 — global image motion pass
+   Replace the predictable image shake with a more musical, irregular motion.
+   Keep all photo-specific color/effect stacks intact.
+*/
+
+.hero-pair img,
+.gallery-row img {
+    animation:
+        chromaSplit20 1.35s ease-in-out infinite alternate,
+        highlightBloom 6.8s ease-in-out infinite,
+        imageJazz26 var(--motionDur, 8.4s) linear infinite both !important;
+    animation-delay:
+        0s,
+        0s,
+        var(--motionDelay, 0s) !important;
+    will-change: transform, filter;
+}
+
+.hero-pair img:first-child { --motionDur: 8.7s; --motionDelay: -1.8s; }
+.hero-pair img:last-child  { --motionDur: 9.9s; --motionDelay: -4.1s; }
+.gallery-row .psy-frame:nth-child(1) img { --motionDur: 7.6s; --motionDelay: -2.2s; }
+.gallery-row .psy-frame:nth-child(2) img { --motionDur: 10.1s; --motionDelay: -6.0s; }
+.gallery-row .psy-frame:nth-child(3) img { --motionDur: 8.9s; --motionDelay: -3.4s; }
+.gallery-row .psy-frame:nth-child(4) img { --motionDur: 11.2s; --motionDelay: -7.1s; }
+
+@keyframes imageJazz26 {
+    0%   { transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1); }
+    6%   { transform: translate3d(.5px, -.3px, 0) rotate(.06deg) scale(1.001); }
+    13%  { transform: translate3d(-.8px, .6px, 0) rotate(-.10deg) scale(1.004); }
+    19%  { transform: translate3d(.4px, 1.0px, 0) rotate(.12deg) scale(1.002); }
+    27%  { transform: translate3d(-1.2px, -.7px, 0) rotate(-.16deg) scale(1.006); }
+    36%  { transform: translate3d(.9px, .2px, 0) rotate(.14deg) scale(1.003); }
+    44%  { transform: translate3d(-.3px, 1.2px, 0) rotate(-.05deg) scale(1.001); }
+    53%  { transform: translate3d(1.3px, -.9px, 0) rotate(.18deg) scale(1.007); }
+    61%  { transform: translate3d(-1.0px, -.2px, 0) rotate(-.12deg) scale(1.004); }
+    69%  { transform: translate3d(.7px, 1.1px, 0) rotate(.08deg) scale(1.002); }
+    74%  { transform: translate3d(-2.0px, .8px, 0) rotate(-.28deg) scale(1.008); }
+    76%  { transform: translate3d(1.5px, -.7px, 0) rotate(.22deg) scale(1.004); }
+    79%  { transform: translate3d(-.4px, .2px, 0) rotate(-.04deg) scale(1.001); }
+    87%  { transform: translate3d(.8px, .8px, 0) rotate(.10deg) scale(1.003); }
+    94%  { transform: translate3d(-.7px, -.6px, 0) rotate(-.09deg) scale(1.002); }
+    100% { transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1); }
+}
+</style>
+
 </head>
 <body class="psychedelic-mode"><a class="mode-switch end-trip" href="index.html">End Trip</a><div aria-hidden="true" class="photo-backgrounds"><div class="photo-bg photo-bg-1"></div><div class="photo-bg photo-bg-2"></div><div class="photo-bg photo-bg-3"></div><div class="photo-bg photo-bg-4"></div><div class="photo-bg photo-bg-5"></div><div class="photo-bg photo-bg-6"></div></div><canvas aria-hidden="true" id="color-field"></canvas><svg aria-hidden="true" height="0" id="psy-filter-defs" style="position:absolute;overflow:hidden" width="0">
 <defs>
@@ -3486,6 +3858,185 @@ body.psy-page-hidden .psy-frame::after {
     window.addEventListener("pagehide", stopSolarLoop, { passive: true });
     window.addEventListener("pageshow", updateSolarLoopState, { passive: true });
     handleVisibilityChange();
+})();
+</script>
+
+
+<script id="v24-2-photo3-animation-script">
+/* V24.2 — Photo 3 only
+   Animate the crushed RGB mapping itself so the neon facial texture
+   and posterized color layers crawl, expand, contract, and ripple.
+*/
+(function () {
+    const NS = "http://www.w3.org/2000/svg";
+    const INTERVAL_MS = 1000 / 24;
+    const PRELOAD_MARGIN_PX = 600;
+
+    function clamp(v, a, b) {
+        return Math.max(a, Math.min(b, v));
+    }
+
+    function mix(a, b, t) {
+        return a + (b - a) * t;
+    }
+
+    function ensureDefs() {
+        const svg = document.getElementById("v21-solar-svg");
+        if (svg) return svg.querySelector("defs");
+        return document.querySelector("svg defs");
+    }
+
+    function createAnimatedCrushedFilter(id) {
+        const defs = ensureDefs();
+        const existing = document.getElementById(id);
+        if (existing) {
+            return {
+                r: document.getElementById(id + "-r"),
+                g: document.getElementById(id + "-g"),
+                b: document.getElementById(id + "-b"),
+                sat: document.getElementById(id + "-sat")
+            };
+        }
+
+        const filter = document.createElementNS(NS, "filter");
+        filter.setAttribute("id", id);
+        filter.setAttribute("color-interpolation-filters", "sRGB");
+
+        const comp = document.createElementNS(NS, "feComponentTransfer");
+        const r = document.createElementNS(NS, "feFuncR");
+        const g = document.createElementNS(NS, "feFuncG");
+        const b = document.createElementNS(NS, "feFuncB");
+        r.setAttribute("id", id + "-r");
+        g.setAttribute("id", id + "-g");
+        b.setAttribute("id", id + "-b");
+        r.setAttribute("type", "table");
+        g.setAttribute("type", "table");
+        b.setAttribute("type", "table");
+        comp.appendChild(r);
+        comp.appendChild(g);
+        comp.appendChild(b);
+
+        const sat = document.createElementNS(NS, "feColorMatrix");
+        sat.setAttribute("id", id + "-sat");
+        sat.setAttribute("type", "saturate");
+        sat.setAttribute("values", "1.80");
+
+        filter.appendChild(comp);
+        filter.appendChild(sat);
+        defs.appendChild(filter);
+        return { r, g, b, sat };
+    }
+
+    const frame = document.querySelector('.gallery-row .psy-frame:nth-child(1)');
+    const img = frame && frame.querySelector('img');
+    if (!frame || !img) return;
+
+    const filter = createAnimatedCrushedFilter('curve-crushed-photo3');
+
+    const baseR = [0.02, 0.08, 0.90, 0.25, 1.00, 0.62];
+    const baseG = [0.01, 0.70, 0.16, 0.96, 0.34, 0.88];
+    const baseB = [0.18, 0.92, 0.08, 0.72, 1.00, 0.40];
+    const altR  = [0.06, 0.22, 1.00, 0.10, 0.76, 0.94];
+    const altG  = [0.10, 0.92, 0.06, 0.74, 1.00, 0.26];
+    const altB  = [0.32, 1.00, 0.02, 0.88, 0.66, 0.12];
+
+    const bufR = new Float64Array(6);
+    const bufG = new Float64Array(6);
+    const bufB = new Float64Array(6);
+    let timer = 0;
+    let raf = 0;
+    let active = false;
+
+    function formatTable(values) {
+        let result = values[0].toFixed(3);
+        for (let i = 1; i < values.length; i++) result += ' ' + values[i].toFixed(3);
+        return result;
+    }
+
+    function setAttributeIfChanged(node, name, value) {
+        if (node.getAttribute(name) !== value) node.setAttribute(name, value);
+    }
+
+    function modulateCrushedInto(out, base, alt, t, phase, driftAmp, rippleAmp) {
+        const morph = (Math.sin(t * 0.00072 + phase) + 1) / 2;
+        const crawl = (Math.sin(t * 0.00110 + phase * 1.8) + 1) / 2;
+        const breathe = (Math.sin(t * 0.00165 + phase * 0.9) + 1) / 2;
+        const offset = Math.floor(crawl * (base.length - 1));
+        for (let i = 0; i < base.length; i++) {
+            const p = phase + i * 0.73;
+            const drift = Math.sin(t * 0.00155 + p) * driftAmp;
+            const ripple = Math.cos(t * 0.00225 + p * 1.3) * rippleAmp;
+            const morphed = mix(base[i], alt[i], morph * 0.50);
+            const crawled = mix(morphed, alt[(i + offset) % base.length], 0.12 + breathe * 0.08);
+            out[i] = clamp(crawled + drift + ripple, 0, 1);
+        }
+    }
+
+    function step(now) {
+        raf = 0;
+        if (!active || document.visibilityState !== 'visible') return;
+
+        modulateCrushedInto(bufR, baseR, altR, now, 0.2, 0.045, 0.032);
+        modulateCrushedInto(bufG, baseG, altG, now, 1.4, 0.050, 0.036);
+        modulateCrushedInto(bufB, baseB, altB, now, 2.6, 0.056, 0.040);
+        const saturation = (1.34 + ((Math.sin(now * 0.00125 + 0.8) + 1) / 2) * 0.28).toFixed(3);
+
+        setAttributeIfChanged(filter.r, 'tableValues', formatTable(bufR));
+        setAttributeIfChanged(filter.g, 'tableValues', formatTable(bufG));
+        setAttributeIfChanged(filter.b, 'tableValues', formatTable(bufB));
+        setAttributeIfChanged(filter.sat, 'values', saturation);
+
+        schedule();
+    }
+
+    function schedule() {
+        if (!active || document.visibilityState !== 'visible' || timer || raf) return;
+        timer = window.setTimeout(function () {
+            timer = 0;
+            if (!active || document.visibilityState !== 'visible') return;
+            raf = requestAnimationFrame(step);
+        }, INTERVAL_MS);
+    }
+
+    function stop() {
+        if (timer) clearTimeout(timer);
+        if (raf) cancelAnimationFrame(raf);
+        timer = 0;
+        raf = 0;
+    }
+
+    function updateState(nextActive) {
+        if (active === nextActive) return;
+        active = nextActive;
+        if (active) schedule();
+        else stop();
+    }
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.target === frame) updateState(entry.isIntersecting);
+            }
+        }, {
+            root: null,
+            rootMargin: PRELOAD_MARGIN_PX + 'px 0px ' + PRELOAD_MARGIN_PX + 'px 0px',
+            threshold: 0
+        });
+
+        const rect = frame.getBoundingClientRect();
+        const initiallyNear = rect.bottom >= -PRELOAD_MARGIN_PX && rect.top <= window.innerHeight + PRELOAD_MARGIN_PX;
+        updateState(initiallyNear);
+        observer.observe(frame);
+    } else {
+        updateState(true);
+    }
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') schedule();
+        else stop();
+    }, { passive: true });
+    window.addEventListener('pagehide', stop, { passive: true });
+    window.addEventListener('pageshow', function () { if (active) schedule(); }, { passive: true });
 })();
 </script>
 
