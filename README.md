@@ -192,3 +192,103 @@ This version:
 - Left Photos 1, 2, 3, and 6 unchanged
 - Photo 4 now uses the same rainbow treatment as Photo 1, but out of phase and with a different color-grade loop
 - Photo 5 now combines Photo 2's wave/color-shift base with Photo 3's prism/bullseye overlay
+
+
+## V20
+
+- Added moving modulation to the solarized `curve-solar` look on Photos 2 and 5
+- Added animated RGB drift, luma pulsing, and ripple movement to the solarized photos
+- Increased the size and glitch strength of the sitewide chroma/glitch effect
+- Increased the whole-page warble and background motion
+- Left the non-solarized photo designs otherwise intact
+
+
+## V20.1
+
+- Removed the bullseye/ripple overlay from Photo 2
+- Kept Photo 2's solarized movement
+- Kept Photo 5's new effect unchanged
+- Kept all other V20 changes unchanged
+
+
+## V21
+
+- Animated the actual solarized RGB curve table values for Photos 2 and 5
+- Curves now expand, contract, partially invert, crawl across the mapping points, and transform over time
+- Added dedicated animated solar filters for Photo 2 and Photo 5
+- Fixed the transform conflict by moving line tearing from the image elements to the frame wrappers
+- Kept Photo 5's overall stronger solarized look
+
+
+## V22
+
+- Photo 3 is now much bolder via stronger saturation, contrast, brightness, and overlay intensity
+- Kept Photo 3's basic pattern/motion the same
+- Added a brand-new caustic contour overlay to Photo 4
+- Left the other photo treatments unchanged
+
+
+## V22.1 — Photo 4 redo only
+
+- Scrapped the previous Photo 4 effect stack
+- Rebuilt Photo 4 specifically for the black-and-white image
+- New base treatment: richer monochrome contrast/brightness
+- New overlay 1: animated duotone interference wash
+- New overlay 2: liquid silver contour / topographic light lines
+- No sitewide settings changed
+- No other photo treatments changed
+
+
+## V22.2 — Photo 4 color swirls / explosions
+
+- Rebuilt Photo 4 again from scratch
+- Removed the previous Photo 4 treatment
+- Added animated broad color swirls and patches
+- Added brighter color-burst / explosion overlays
+- Kept the underlying image monochrome-forward
+- No sitewide changes
+- No other photo changes
+
+
+## V22.3 — Photo 4 direct color hit
+
+- Rebuilt Photo 4 yet again with a much more direct, unmistakable treatment
+- Removed the prior subtle Photo 4 approach
+- Added large animated color swirls / clouds with very high visibility
+- Added repeated expanding color-burst / explosion overlays
+- Added a slight pulse to the black-and-white base image so the color feels like it hits the image itself
+- No sitewide changes
+- No other photo changes
+
+
+## V23 — image assets only
+
+Rebuilt directly from V22.3.
+
+The only website change in this revision is image delivery for Psychedelic mode:
+
+- Added 900px and 1400px JPEG variants
+- Added `srcset` and `sizes` to the six Psychedelic-mode foreground photos
+- Reused those same optimized assets for the existing warped backgrounds
+- Mobile warped backgrounds use the 900px variants
+- Desktop warped backgrounds use the 1400px variants
+- Original photographs remain untouched and are still used by the Normal page
+- No effects, animation timing, movement, filters, layout, or sitewide settings were changed
+
+
+## V24 — optimization only
+
+Built directly from V23 image-assets-only.
+
+No visual effect was removed or redesigned. This revision only reduces work that
+is unnecessary at a given moment:
+
+- Keeps the existing effect CSS and all effect parameters intact
+- Caps the animated RGB solar-curve calculations at approximately 30 updates/sec
+- Updates Photo 2 and Photo 5 curves only while each photo is visible or within 600px of the viewport
+- Reuses numeric buffers instead of allocating new curve arrays every update
+- Avoids rewriting SVG filter attributes when the rounded value is unchanged
+- Pauses each photo's CSS animations only while it is more than 600px offscreen
+- Pauses all animation work while the browser tab/page is hidden
+- Adds paint containment to each photo frame to reduce repaint spillover
+- Leaves the Normal page unchanged

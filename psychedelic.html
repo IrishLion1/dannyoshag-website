@@ -630,7 +630,7 @@ body.psychedelic-mode {
 .photo-bg-1 {
     left: -27vmax;
     top: -14vmax;
-    background-image: url("images/photo-1.jpg");
+    background-image: url("images/psy-sized/photo-1-1400.jpg");
     animation:
         bg-drift-1 34s ease-in-out infinite alternate,
         bg-hue-1 21s linear infinite,
@@ -640,7 +640,7 @@ body.psychedelic-mode {
 .photo-bg-2 {
     right: -30vmax;
     top: -5vmax;
-    background-image: url("images/photo-2.jpg");
+    background-image: url("images/psy-sized/photo-2-1400.jpg");
     opacity: .12;
     animation:
         bg-drift-2 41s ease-in-out infinite alternate-reverse,
@@ -652,7 +652,7 @@ body.psychedelic-mode {
 .photo-bg-3 {
     left: 12vw;
     top: 32vh;
-    background-image: url("images/photo-3.jpg");
+    background-image: url("images/psy-sized/photo-3-1400.jpg");
     width: 58vmax;
     opacity: .15;
     animation:
@@ -665,7 +665,7 @@ body.psychedelic-mode {
 .photo-bg-4 {
     right: -18vmax;
     top: 40vh;
-    background-image: url("images/photo-4.jpg");
+    background-image: url("images/psy-sized/photo-4-1400.jpg");
     width: 62vmax;
     opacity: .14;
     animation:
@@ -678,7 +678,7 @@ body.psychedelic-mode {
 .photo-bg-5 {
     left: -18vmax;
     bottom: -34vmax;
-    background-image: url("images/photo-5.jpg");
+    background-image: url("images/psy-sized/photo-5-1400.jpg");
     width: 64vmax;
     opacity: .16;
     animation:
@@ -691,7 +691,7 @@ body.psychedelic-mode {
 .photo-bg-6 {
     right: 8vw;
     bottom: -28vmax;
-    background-image: url("images/photo-6.jpg");
+    background-image: url("images/psy-sized/photo-6-1400.jpg");
     width: 54vmax;
     opacity: .13;
     animation:
@@ -2248,6 +2248,933 @@ than traveling horizontally across the image.
 }
 </style>
 
+
+<style id="psychedelic-effects-v20">
+/* ===== Version 20 =====
+   - Animate the solarized look on Photos 2 and 5 so the channel feeling/ripples move
+   - Increase the scale and glitchiness of the sitewide effect
+*/
+
+/* Stronger sitewide chroma/glitch blanket */
+.hero-pair img,
+.gallery-row img{
+    animation:
+      chromaSplit20 1.35s ease-in-out infinite alternate,
+      highlightBloom 6.8s ease-in-out infinite,
+      lineTear20 5.2s steps(1,end) infinite !important;
+    box-shadow:
+        7px 0 0 -2px rgba(255, 91, 30, .38),
+        -7px 0 0 -2px rgba(255, 20, 135, .34),
+        0 18px 52px rgba(20, 0, 12, .58) !important;
+}
+
+@keyframes chromaSplit20{
+  0%,100%{
+    filter:
+      saturate(1.30)
+      drop-shadow(-2px 0 rgba(255,0,90,.82))
+      drop-shadow(2px 0 rgba(0,255,255,.82));
+  }
+  50%{
+    filter:
+      saturate(1.52)
+      drop-shadow(-8px 0 rgba(255,0,90,.96))
+      drop-shadow(8px 0 rgba(0,255,255,.96));
+  }
+}
+
+@keyframes lineTear20{
+  0%,87%,100%{transform:translateX(0);}
+  88%{transform:translateX(3px);}
+  89%{transform:translateX(-5px);}
+  90%{transform:translateX(6px);}
+  91%{transform:translateX(-3px);}
+  92%{transform:translateX(2px);}
+}
+
+/* Bigger whole-page warm warble */
+.psychedelic-mode::before{
+    opacity:.50 !important;
+    animation-duration: 10.5s, 6.8s !important;
+}
+
+.psychedelic-mode main,
+.psychedelic-mode header{
+    animation: pageWarble20 6.8s ease-in-out infinite alternate !important;
+}
+
+@keyframes pageWarble20{
+    0%{
+        transform: translate3d(-1px, 0, 0) skewX(-.22deg) skewY(.08deg) scaleX(1.001);
+    }
+    33%{
+        transform: translate3d(1.6px, -.7px, 0) skewX(.28deg) skewY(-.10deg) scaleX(1.0035);
+    }
+    67%{
+        transform: translate3d(-.8px, .8px, 0) skewX(-.18deg) skewY(.12deg) scaleY(1.003);
+    }
+    100%{
+        transform: translate3d(1.2px, 0, 0) skewX(.20deg) skewY(-.08deg) scaleX(.999);
+    }
+}
+
+/* Faster, slightly larger background motion */
+.photo-bg-1 { animation-duration: 9s, 6.5s, 4.8s !important; }
+.photo-bg-2 { animation-duration: 11s, 8s, 5.2s !important; }
+.photo-bg-3 { animation-duration: 10s, 7.2s, 5.6s !important; }
+.photo-bg-4 { animation-duration: 12s, 8.6s, 4.9s !important; }
+.photo-bg-5 { animation-duration: 10.6s, 7.5s, 6s !important; }
+.photo-bg-6 { animation-duration: 11.5s, 8.1s, 5.4s !important; }
+
+/* --- Solarized curve modulation for Photos 2 and 5 --- */
+/* Photo 2 gets moving channel/ripple modulation */
+.hero-pair .psy-frame:nth-child(2) img{
+    filter: url("#curve-solar") saturate(1.12) contrast(1.03) !important;
+    animation:
+      v20-solar-rgb-drift 4.6s ease-in-out infinite alternate,
+      v20-solar-luma-pulse 6.1s ease-in-out infinite,
+      lineTear20 5.2s steps(1,end) infinite !important;
+}
+
+.hero-pair .psy-frame:nth-child(2)::after{
+    content:"" !important;
+    display:block !important;
+    position:absolute;
+    inset:-14%;
+    z-index:4;
+    pointer-events:none;
+    mix-blend-mode:screen !important;
+    opacity:.28 !important;
+    background:
+      repeating-radial-gradient(
+        ellipse at 52% 48%,
+        rgba(255,0,145,.76) 0 2.8%,
+        transparent 2.8% 7%,
+        rgba(0,235,255,.62) 7% 10.4%,
+        transparent 10.4% 16%,
+        rgba(210,255,0,.48) 16% 19.8%,
+        transparent 19.8% 27%
+      ) !important;
+    animation:
+      v20-ripple-shift 7.3s ease-in-out infinite alternate,
+      v20-ripple-hue 9.4s linear infinite !important;
+}
+
+.hero-pair .psy-frame:nth-child(2)::before{
+    animation:
+      v171-wave-fold 6.2s ease-in-out infinite alternate,
+      v171-wave-hue 10.4s linear infinite,
+      v20-wave-undulate 5.7s ease-in-out infinite alternate !important;
+}
+
+/* Photo 5 gets Photo 2 solarized movement + Photo 3 prism overlay */
+.gallery-row .psy-frame:nth-child(3) img{
+    filter: url("#curve-solar") saturate(1.14) contrast(1.04) !important;
+    animation:
+      v20-solar-rgb-drift-2 5.2s ease-in-out infinite alternate,
+      v20-solar-luma-pulse 5.7s ease-in-out infinite,
+      lineTear20 5.2s steps(1,end) infinite !important;
+}
+
+.gallery-row .psy-frame:nth-child(3)::before{
+    animation:
+      v171-wave-fold 6.4s ease-in-out infinite alternate,
+      v171-wave-hue 9.8s linear infinite,
+      v20-wave-undulate-2 6.4s ease-in-out infinite alternate !important;
+}
+
+.gallery-row .psy-frame:nth-child(3)::after{
+    opacity:.58 !important;
+    animation:
+      prism-spin 18s linear infinite reverse,
+      prism-scale 6.6s ease-in-out infinite alternate,
+      v20-ripple-hue 11.2s linear infinite !important;
+}
+
+/* animated channel drifts */
+@keyframes v20-solar-rgb-drift{
+  0%{
+    transform: translateX(-1px) translateY(0) scale(1.002);
+    filter: url("#curve-solar") saturate(1.06) contrast(1.01) hue-rotate(0deg);
+  }
+  35%{
+    transform: translateX(1.5px) translateY(-.5px) scale(1.006);
+    filter: url("#curve-solar") saturate(1.18) contrast(1.05) hue-rotate(18deg);
+  }
+  70%{
+    transform: translateX(-1.2px) translateY(.8px) scale(.999);
+    filter: url("#curve-solar") saturate(1.26) contrast(1.08) hue-rotate(-12deg);
+  }
+  100%{
+    transform: translateX(2.1px) translateY(-.6px) scale(1.005);
+    filter: url("#curve-solar") saturate(1.14) contrast(1.04) hue-rotate(24deg);
+  }
+}
+
+@keyframes v20-solar-rgb-drift-2{
+  0%{
+    transform: translateX(.5px) translateY(-.3px) scale(1.001);
+    filter: url("#curve-solar") saturate(1.10) contrast(1.03) hue-rotate(0deg);
+  }
+  30%{
+    transform: translateX(-1.7px) translateY(.8px) scale(1.007);
+    filter: url("#curve-solar") saturate(1.24) contrast(1.07) hue-rotate(22deg);
+  }
+  68%{
+    transform: translateX(1.8px) translateY(-.9px) scale(.998);
+    filter: url("#curve-solar") saturate(1.30) contrast(1.09) hue-rotate(-16deg);
+  }
+  100%{
+    transform: translateX(-1px) translateY(.4px) scale(1.004);
+    filter: url("#curve-solar") saturate(1.16) contrast(1.05) hue-rotate(28deg);
+  }
+}
+
+@keyframes v20-solar-luma-pulse{
+  0%,100%{
+    opacity:1;
+  }
+  42%{
+    opacity:.96;
+  }
+  70%{
+    opacity:1;
+  }
+}
+
+@keyframes v20-ripple-shift{
+  0%{
+    transform: translate(-6%, -4%) scale(.90) rotate(-6deg);
+    border-radius: 44% 56% 61% 39% / 59% 40% 60% 41%;
+    background-position: 45% 48%;
+    opacity:.18;
+  }
+  50%{
+    transform: translate(4%, 5%) scale(1.16) rotate(8deg);
+    border-radius: 63% 37% 43% 57% / 38% 65% 35% 62%;
+    background-position: 57% 54%;
+    opacity:.34;
+  }
+  100%{
+    transform: translate(-2%, 3%) scale(1.04) rotate(-3deg);
+    border-radius: 36% 64% 59% 41% / 63% 37% 56% 44%;
+    background-position: 48% 44%;
+    opacity:.24;
+  }
+}
+
+@keyframes v20-ripple-hue{
+  to{
+    filter: hue-rotate(360deg) saturate(165%) contrast(110%);
+  }
+}
+
+@keyframes v20-wave-undulate{
+  0%{
+    transform: rotate(-4deg) scaleX(.95) scaleY(1.07) skewX(-3deg);
+  }
+  50%{
+    transform: rotate(4deg) scaleX(1.10) scaleY(.92) skewX(6deg);
+  }
+  100%{
+    transform: rotate(-1deg) scaleX(1.03) scaleY(1.13) skewX(-1deg);
+  }
+}
+
+@keyframes v20-wave-undulate-2{
+  0%{
+    transform: rotate(3deg) scaleX(1.02) scaleY(.95) skewX(4deg);
+  }
+  50%{
+    transform: rotate(-5deg) scaleX(.93) scaleY(1.11) skewX(-6deg);
+  }
+  100%{
+    transform: rotate(1deg) scaleX(1.06) scaleY(.97) skewX(2deg);
+  }
+}
+</style>
+
+
+<style id="psychedelic-effects-v20-1">
+/* ===== Version 20.1 =====
+   Undo the bullseye/ripple overlay on Photo 2 only.
+   Keep the solarized movement and all other V20 changes intact.
+*/
+.hero-pair .psy-frame:nth-child(2)::after{
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    animation: none !important;
+    opacity: 0 !important;
+}
+</style>
+
+
+<style id="psychedelic-effects-v21">
+/* ===== Version 21 =====
+   Animate the actual solarized RGB curves on Photos 2 and 5,
+   and fix the transform conflict with the line-tear effect.
+*/
+
+/* Stop the conflicting transform-based solar animations on the images themselves. */
+.hero-pair .psy-frame:nth-child(2) img,
+.gallery-row .psy-frame:nth-child(3) img {
+    animation:
+        v21-solar-opacity 6.4s ease-in-out infinite,
+        v21-solar-chroma-breath 4.8s ease-in-out infinite alternate !important;
+    will-change: filter, opacity;
+}
+
+/* Move line tearing to the frame wrappers so it no longer overrides image transforms. */
+.hero-pair .psy-frame:nth-child(2),
+.gallery-row .psy-frame:nth-child(3) {
+    animation: v21-line-tear-frame 5.2s steps(1,end) infinite !important;
+    will-change: transform;
+}
+
+@keyframes v21-line-tear-frame {
+    0%,87%,100% { transform: translateX(0); }
+    88% { transform: translateX(3px); }
+    89% { transform: translateX(-5px); }
+    90% { transform: translateX(6px); }
+    91% { transform: translateX(-3px); }
+    92% { transform: translateX(2px); }
+}
+
+@keyframes v21-solar-opacity {
+    0%,100% { opacity: 1; }
+    35% { opacity: .985; }
+    72% { opacity: .955; }
+}
+
+@keyframes v21-solar-chroma-breath {
+    0% {
+        filter: saturate(1.10) contrast(1.02)
+                drop-shadow(-2px 0 rgba(255,0,90,.34))
+                drop-shadow(2px 0 rgba(0,255,255,.34));
+    }
+    100% {
+        filter: saturate(1.24) contrast(1.07)
+                drop-shadow(-5px 0 rgba(255,0,90,.56))
+                drop-shadow(5px 0 rgba(0,255,255,.56));
+    }
+}
+
+/* Photo 2 and 5 will receive animated filter ids from JS. Keep the wave treatments. */
+.hero-pair .psy-frame:nth-child(2) img { filter: url("#curve-solar-photo2") !important; }
+.gallery-row .psy-frame:nth-child(3) img { filter: url("#curve-solar-photo5") !important; }
+</style>
+
+
+<style id="psychedelic-effects-v22">
+/* ===== Version 22 =====
+   - Make Photo 3 much bolder without changing its basic motion profile
+   - Add one brand-new unique overlay element to Photo 4
+*/
+
+/* PHOTO 3: same general effect, but bolder / more readable */
+.gallery-row .psy-frame:nth-child(1) img,
+.pattern-prisms img {
+    filter:
+        url("#curve-crushed")
+        saturate(1.62)
+        contrast(1.24)
+        brightness(1.06)
+        drop-shadow(16px 0 0 rgba(255, 0, 190, .40))
+        drop-shadow(-8px 0 0 rgba(0, 235, 255, .18)) !important;
+}
+
+.pattern-prisms::after {
+    opacity: .68 !important;
+    filter: saturate(1.30) contrast(1.16) !important;
+    mix-blend-mode: screen !important;
+}
+
+/* PHOTO 4: keep the existing out-of-phase rainbow treatment,
+   but add a brand-new "caustic contour" layer not used elsewhere. */
+.pattern-kaleidoscope::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: -22%;
+    z-index: 4;
+    pointer-events: none;
+    opacity: .34;
+    mix-blend-mode: soft-light;
+    background:
+        repeating-radial-gradient(
+            ellipse at 52% 48%,
+            rgba(255,255,255,.22) 0 1.2%,
+            transparent 1.2% 6.5%,
+            rgba(0,255,210,.18) 6.5% 7.2%,
+            transparent 7.2% 12.5%,
+            rgba(255,160,0,.16) 12.5% 13.2%,
+            transparent 13.2% 19%
+        ),
+        radial-gradient(
+            circle at 46% 54%,
+            rgba(255,255,255,.08) 0 14%,
+            transparent 22%
+        );
+    background-size: 132% 132%, 100% 100%;
+    filter: blur(0.8px) saturate(1.28) contrast(1.08);
+    animation:
+        v22-caustic-drift 11.8s ease-in-out infinite alternate,
+        v22-caustic-hue 14.6s linear infinite;
+}
+
+@keyframes v22-caustic-drift {
+    0% {
+        transform: translate(-4%, -3%) scale(.94) rotate(-6deg);
+        background-position: 18% 22%, 50% 50%;
+        border-radius: 44% 56% 61% 39% / 58% 40% 60% 42%;
+        opacity: .24;
+    }
+    50% {
+        transform: translate(6%, 4%) scale(1.10) rotate(5deg);
+        background-position: 76% 38%, 48% 52%;
+        border-radius: 62% 38% 42% 58% / 37% 64% 36% 63%;
+        opacity: .40;
+    }
+    100% {
+        transform: translate(-2%, 7%) scale(1.03) rotate(-2deg);
+        background-position: 40% 82%, 52% 48%;
+        border-radius: 36% 64% 57% 43% / 63% 37% 55% 45%;
+        opacity: .30;
+    }
+}
+
+@keyframes v22-caustic-hue {
+    to {
+        filter: blur(0.8px) saturate(1.45) contrast(1.12) hue-rotate(360deg);
+    }
+}
+</style>
+
+
+<style id="psychedelic-effects-v22-1">
+/* ===== Version 22.1 =====
+   Redo Photo 4 only.
+   Scrap previous Photo 4 effect stack and replace it with a new treatment
+   designed specifically for the black-and-white image.
+*/
+
+/* Reset the old Photo 4 layers completely */
+.gallery-row .psy-frame:nth-child(2)::before,
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::before,
+.pattern-kaleidoscope::after {
+    background: none !important;
+    animation: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+}
+
+/* Start over on the base image itself:
+   keep it monochrome-forward, but richer and cleaner */
+.gallery-row .psy-frame:nth-child(2) img,
+.pattern-kaleidoscope img {
+    filter:
+        grayscale(1)
+        contrast(1.34)
+        brightness(1.08)
+        sepia(.10)
+        drop-shadow(10px 0 0 rgba(0, 255, 220, .16))
+        drop-shadow(-8px 0 0 rgba(255, 80, 0, .12)) !important;
+}
+
+/*
+New Photo 4 effect, layer 1:
+an animated duotone interference wash.
+Because the source image is black and white, this functions like colored light
+passing over silver tones.
+*/
+.gallery-row .psy-frame:nth-child(2)::before,
+.pattern-kaleidoscope::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: -18%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: .46 !important;
+    mix-blend-mode: color !important;
+    background:
+        conic-gradient(
+            from 18deg at 50% 50%,
+            rgba(0, 255, 230, .86),
+            rgba(0, 145, 255, .72),
+            rgba(120, 70, 255, .68),
+            rgba(255, 85, 0, .62),
+            rgba(255, 210, 60, .50),
+            rgba(0, 255, 230, .86)
+        );
+    background-size: 210% 210%;
+    animation:
+        v221-photo4-duotone 12.6s ease-in-out infinite,
+        v221-photo4-hue 15.8s linear infinite !important;
+}
+
+/*
+New Photo 4 effect, layer 2:
+liquid silver contour lines / interference topography.
+This is the brand-new direction for Photo 4.
+*/
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: -16%;
+    z-index: 3;
+    pointer-events: none;
+    opacity: .34 !important;
+    mix-blend-mode: screen !important;
+    background:
+        repeating-radial-gradient(
+            ellipse at 52% 48%,
+            rgba(255,255,255,.36) 0 1.2%,
+            transparent 1.2% 5.8%,
+            rgba(180,255,245,.18) 5.8% 6.8%,
+            transparent 6.8% 11.8%,
+            rgba(255,215,160,.16) 11.8% 12.7%,
+            transparent 12.7% 18.4%
+        );
+    background-size: 132% 132%;
+    filter: blur(.9px) contrast(1.08);
+    animation:
+        v221-photo4-contours 10.2s ease-in-out infinite alternate,
+        v221-photo4-contour-hue 13.4s linear infinite !important;
+}
+
+@keyframes v221-photo4-duotone {
+    0% {
+        transform: translate(-5%, -4%) scale(.96) rotate(-8deg);
+        background-position: 16% 20%;
+        border-radius: 44% 56% 61% 39% / 58% 40% 60% 42%;
+        opacity: .34;
+    }
+    32% {
+        transform: translate(6%, -2%) scale(1.10) rotate(7deg);
+        background-position: 78% 22%;
+        border-radius: 63% 37% 42% 58% / 39% 64% 36% 61%;
+        opacity: .56;
+    }
+    66% {
+        transform: translate(5%, 6%) scale(1.05) rotate(16deg);
+        background-position: 72% 84%;
+        border-radius: 37% 63% 58% 42% / 62% 38% 55% 45%;
+        opacity: .42;
+    }
+    100% {
+        transform: translate(-4%, 5%) scale(1.12) rotate(-3deg);
+        background-position: 18% 76%;
+        border-radius: 59% 41% 35% 65% / 43% 57% 66% 34%;
+        opacity: .52;
+    }
+}
+
+@keyframes v221-photo4-hue {
+    to {
+        filter: hue-rotate(360deg) saturate(165%) contrast(108%);
+    }
+}
+
+@keyframes v221-photo4-contours {
+    0% {
+        transform: translate(-4%, -3%) scale(.92) rotate(-5deg);
+        background-position: 18% 22%;
+        border-radius: 46% 54% 62% 38% / 55% 41% 59% 45%;
+        opacity: .22;
+    }
+    50% {
+        transform: translate(6%, 4%) scale(1.10) rotate(4deg);
+        background-position: 76% 38%;
+        border-radius: 62% 38% 42% 58% / 37% 64% 36% 63%;
+        opacity: .38;
+    }
+    100% {
+        transform: translate(-2%, 7%) scale(1.03) rotate(-2deg);
+        background-position: 40% 82%;
+        border-radius: 36% 64% 57% 43% / 63% 37% 55% 45%;
+        opacity: .30;
+    }
+}
+
+@keyframes v221-photo4-contour-hue {
+    to {
+        filter: blur(.9px) hue-rotate(360deg) saturate(150%) contrast(112%);
+    }
+}
+</style>
+
+
+<style id="psychedelic-effects-v22-2">
+/* ===== Version 22.2 =====
+   Redo Photo 4 again.
+   Photo 4 only: remove prior treatment and replace it with animated
+   swirls, patches, and explosions of color. No sitewide changes.
+*/
+
+/* Reset all previous Photo 4-specific layers */
+.gallery-row .psy-frame:nth-child(2)::before,
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::before,
+.pattern-kaleidoscope::after {
+    background: none !important;
+    animation: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* Keep the underlying black-and-white image clean and slightly punchy */
+.gallery-row .psy-frame:nth-child(2) img,
+.pattern-kaleidoscope img {
+    filter:
+        grayscale(1)
+        contrast(1.22)
+        brightness(1.06)
+        drop-shadow(6px 0 0 rgba(255, 40, 160, .14))
+        drop-shadow(-6px 0 0 rgba(0, 225, 255, .14)) !important;
+}
+
+/* Layer 1: broad psychedelic color swirls */
+.gallery-row .psy-frame:nth-child(2)::before,
+.pattern-kaleidoscope::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: -22%;
+    z-index: 2;
+    pointer-events: none;
+    mix-blend-mode: color !important;
+    opacity: .58 !important;
+    background:
+        radial-gradient(circle at 28% 26%, rgba(255, 0, 160, .92) 0 0, rgba(255,0,160,.72) 8%, transparent 24%),
+        radial-gradient(circle at 76% 32%, rgba(0, 235, 255, .90) 0 0, rgba(0,235,255,.68) 8%, transparent 25%),
+        radial-gradient(circle at 54% 72%, rgba(255, 210, 0, .86) 0 0, rgba(255,210,0,.62) 8%, transparent 26%),
+        radial-gradient(circle at 22% 76%, rgba(120, 0, 255, .86) 0 0, rgba(120,0,255,.62) 8%, transparent 24%),
+        radial-gradient(circle at 82% 74%, rgba(255, 90, 0, .84) 0 0, rgba(255,90,0,.60) 8%, transparent 25%);
+    filter: blur(12px) saturate(1.55) contrast(1.12);
+    animation:
+        v222-photo4-swirl 10.8s ease-in-out infinite,
+        v222-photo4-hue 12.8s linear infinite !important;
+}
+
+/* Layer 2: brighter "explosion" bursts / patches */
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: -18%;
+    z-index: 3;
+    pointer-events: none;
+    mix-blend-mode: screen !important;
+    opacity: .50 !important;
+    background:
+        radial-gradient(circle at 48% 48%, rgba(255,255,255,.20) 0 2%, transparent 7%),
+        radial-gradient(circle at 50% 50%, rgba(255, 60, 160, .92) 0 2%, rgba(255, 60, 160, .46) 6%, transparent 16%),
+        radial-gradient(circle at 50% 50%, rgba(0, 235, 255, .88) 0 2%, rgba(0, 235, 255, .42) 7%, transparent 17%),
+        radial-gradient(circle at 50% 50%, rgba(255, 220, 0, .82) 0 2%, rgba(255, 220, 0, .34) 8%, transparent 18%),
+        radial-gradient(circle at 50% 50%, rgba(120, 0, 255, .82) 0 2%, rgba(120, 0, 255, .34) 9%, transparent 19%);
+    filter: blur(3px) saturate(1.7) contrast(1.14);
+    animation:
+        v222-photo4-bursts 7.2s ease-in-out infinite,
+        v222-photo4-burst-hue 9.6s linear infinite !important;
+}
+
+@keyframes v222-photo4-swirl {
+    0% {
+        transform: translate(-6%, -5%) scale(.92) rotate(-12deg);
+        background-position: 18% 24%;
+        border-radius: 44% 56% 63% 37% / 58% 40% 60% 42%;
+        opacity: .40;
+    }
+    25% {
+        transform: translate(5%, -2%) scale(1.16) rotate(8deg);
+        background-position: 74% 20%;
+        border-radius: 62% 38% 42% 58% / 39% 64% 36% 61%;
+        opacity: .66;
+    }
+    50% {
+        transform: translate(7%, 7%) scale(1.06) rotate(20deg);
+        background-position: 78% 82%;
+        border-radius: 36% 64% 57% 43% / 63% 37% 55% 45%;
+        opacity: .54;
+    }
+    75% {
+        transform: translate(-4%, 6%) scale(1.20) rotate(-4deg);
+        background-position: 20% 74%;
+        border-radius: 58% 42% 36% 64% / 44% 56% 66% 34%;
+        opacity: .70;
+    }
+    100% {
+        transform: translate(-6%, -5%) scale(.92) rotate(348deg);
+        background-position: 18% 24%;
+        border-radius: 44% 56% 63% 37% / 58% 40% 60% 42%;
+        opacity: .40;
+    }
+}
+
+@keyframes v222-photo4-bursts {
+    0% {
+        transform: translate(-2%, 2%) scale(.36) rotate(-6deg);
+        opacity: .14;
+        border-radius: 50%;
+    }
+    16% {
+        transform: translate(4%, -3%) scale(.96) rotate(8deg);
+        opacity: .46;
+        border-radius: 43% 57% 62% 38% / 58% 39% 61% 42%;
+    }
+    33% {
+        transform: translate(-5%, 5%) scale(1.28) rotate(-10deg);
+        opacity: .68;
+        border-radius: 64% 36% 41% 59% / 38% 65% 35% 62%;
+    }
+    52% {
+        transform: translate(3%, 6%) scale(.58) rotate(14deg);
+        opacity: .20;
+        border-radius: 36% 64% 58% 42% / 63% 37% 55% 45%;
+    }
+    72% {
+        transform: translate(6%, -1%) scale(1.12) rotate(-8deg);
+        opacity: .58;
+        border-radius: 58% 42% 36% 64% / 44% 56% 66% 34%;
+    }
+    100% {
+        transform: translate(-2%, 2%) scale(.36) rotate(354deg);
+        opacity: .14;
+        border-radius: 50%;
+    }
+}
+
+@keyframes v222-photo4-hue {
+    to {
+        filter: blur(12px) saturate(1.75) contrast(1.14) hue-rotate(360deg);
+    }
+}
+
+@keyframes v222-photo4-burst-hue {
+    to {
+        filter: blur(3px) saturate(1.9) contrast(1.18) hue-rotate(360deg);
+    }
+}
+</style>
+
+
+<style id="psychedelic-effects-v22-3">
+/* ===== Version 22.3 =====
+   Photo 4 only.
+   Scrap the previous Photo 4 layers again and replace them with a much more
+   direct, unmistakable animated color-hit treatment.
+*/
+
+/* Completely neutralize prior Photo 4 layers */
+.gallery-row .psy-frame:nth-child(2)::before,
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::before,
+.pattern-kaleidoscope::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    background: none !important;
+    animation: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* Underlying image: keep it recognizably black-and-white, but make it pulse a bit
+   so the new color overlays feel like they are hitting the image itself. */
+.gallery-row .psy-frame:nth-child(2) img,
+.pattern-kaleidoscope img {
+    filter:
+        grayscale(1)
+        contrast(1.26)
+        brightness(1.05)
+        drop-shadow(12px 0 0 rgba(255, 40, 160, .18))
+        drop-shadow(-12px 0 0 rgba(0, 225, 255, .18)) !important;
+    animation: v223-photo4-image-pulse 5.4s ease-in-out infinite alternate !important;
+    transform-origin: 50% 50%;
+}
+
+/* Layer 1: huge moving color swirls / clouds */
+.gallery-row .psy-frame:nth-child(2)::before,
+.pattern-kaleidoscope::before {
+    inset: -28% !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    opacity: .88 !important;
+    mix-blend-mode: color-dodge !important;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(255, 0, 160, .98) 0 8%, rgba(255, 0, 160, .72) 12%, transparent 28%),
+        radial-gradient(circle at 78% 26%, rgba(0, 235, 255, .96) 0 8%, rgba(0, 235, 255, .70) 12%, transparent 30%),
+        radial-gradient(circle at 56% 74%, rgba(255, 220, 0, .94) 0 8%, rgba(255, 220, 0, .66) 12%, transparent 31%),
+        radial-gradient(circle at 24% 78%, rgba(125, 0, 255, .94) 0 8%, rgba(125, 0, 255, .64) 12%, transparent 29%),
+        radial-gradient(circle at 84% 72%, rgba(255, 90, 0, .94) 0 8%, rgba(255, 90, 0, .62) 12%, transparent 30%),
+        radial-gradient(circle at 48% 48%, rgba(255,255,255,.12) 0 6%, transparent 16%) !important;
+    filter: blur(16px) saturate(2.2) contrast(1.22) !important;
+    animation:
+        v223-photo4-swirl 8.6s ease-in-out infinite,
+        v223-photo4-swirl-hue 10.2s linear infinite !important;
+}
+
+/* Layer 2: repeated expanding color explosions / bursts */
+.gallery-row .psy-frame:nth-child(2)::after,
+.pattern-kaleidoscope::after {
+    inset: -20% !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
+    opacity: .84 !important;
+    mix-blend-mode: screen !important;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.24) 0 2%, transparent 5%),
+        radial-gradient(circle at 50% 50%, rgba(255, 0, 170, .98) 0 5%, rgba(255, 0, 170, .48) 9%, transparent 20%),
+        radial-gradient(circle at 50% 50%, rgba(0, 235, 255, .94) 0 6%, rgba(0, 235, 255, .44) 10%, transparent 22%),
+        radial-gradient(circle at 50% 50%, rgba(255, 220, 0, .90) 0 5%, rgba(255, 220, 0, .36) 11%, transparent 24%),
+        radial-gradient(circle at 50% 50%, rgba(125, 0, 255, .88) 0 5%, rgba(125, 0, 255, .34) 12%, transparent 26%),
+        radial-gradient(circle at 24% 34%, rgba(255, 100, 0, .68) 0 4%, transparent 16%),
+        radial-gradient(circle at 76% 66%, rgba(0, 255, 190, .64) 0 4%, transparent 16%) !important;
+    filter: blur(2.6px) saturate(2.0) contrast(1.18) !important;
+    animation:
+        v223-photo4-bursts 5.8s ease-in-out infinite,
+        v223-photo4-burst-hue 8.8s linear infinite !important;
+}
+
+@keyframes v223-photo4-image-pulse {
+    0% {
+        transform: scale(1) rotate(0deg);
+        filter:
+            grayscale(1)
+            contrast(1.18)
+            brightness(1.02)
+            drop-shadow(8px 0 0 rgba(255, 40, 160, .14))
+            drop-shadow(-8px 0 0 rgba(0, 225, 255, .14));
+    }
+    100% {
+        transform: scale(1.018) rotate(.45deg);
+        filter:
+            grayscale(1)
+            contrast(1.34)
+            brightness(1.08)
+            drop-shadow(14px 0 0 rgba(255, 40, 160, .22))
+            drop-shadow(-14px 0 0 rgba(0, 225, 255, .22));
+    }
+}
+
+@keyframes v223-photo4-swirl {
+    0% {
+        transform: translate(-8%, -7%) scale(.88) rotate(-16deg);
+        opacity: .62;
+        border-radius: 44% 56% 61% 39% / 58% 40% 60% 42%;
+    }
+    24% {
+        transform: translate(7%, -3%) scale(1.18) rotate(9deg);
+        opacity: .94;
+        border-radius: 63% 37% 42% 58% / 39% 64% 36% 61%;
+    }
+    52% {
+        transform: translate(8%, 8%) scale(1.04) rotate(24deg);
+        opacity: .80;
+        border-radius: 36% 64% 57% 43% / 63% 37% 55% 45%;
+    }
+    78% {
+        transform: translate(-5%, 7%) scale(1.22) rotate(-7deg);
+        opacity: .98;
+        border-radius: 58% 42% 36% 64% / 44% 56% 66% 34%;
+    }
+    100% {
+        transform: translate(-8%, -7%) scale(.88) rotate(344deg);
+        opacity: .62;
+        border-radius: 44% 56% 61% 39% / 58% 40% 60% 42%;
+    }
+}
+
+@keyframes v223-photo4-bursts {
+    0% {
+        transform: translate(-2%, 2%) scale(.24) rotate(-8deg);
+        opacity: .12;
+        border-radius: 50%;
+    }
+    14% {
+        transform: translate(5%, -4%) scale(1.00) rotate(10deg);
+        opacity: .66;
+        border-radius: 43% 57% 62% 38% / 58% 39% 61% 42%;
+    }
+    32% {
+        transform: translate(-6%, 5%) scale(1.42) rotate(-12deg);
+        opacity: .92;
+        border-radius: 64% 36% 41% 59% / 38% 65% 35% 62%;
+    }
+    48% {
+        transform: translate(3%, 6%) scale(.54) rotate(15deg);
+        opacity: .18;
+        border-radius: 36% 64% 58% 42% / 63% 37% 55% 45%;
+    }
+    70% {
+        transform: translate(7%, -1%) scale(1.18) rotate(-10deg);
+        opacity: .74;
+        border-radius: 58% 42% 36% 64% / 44% 56% 66% 34%;
+    }
+    100% {
+        transform: translate(-2%, 2%) scale(.24) rotate(352deg);
+        opacity: .12;
+        border-radius: 50%;
+    }
+}
+
+@keyframes v223-photo4-swirl-hue {
+    to {
+        filter: blur(16px) saturate(2.4) contrast(1.26) hue-rotate(360deg);
+    }
+}
+
+@keyframes v223-photo4-burst-hue {
+    to {
+        filter: blur(2.6px) saturate(2.15) contrast(1.22) hue-rotate(360deg);
+    }
+}
+</style>
+
+<style>
+/* V23: mobile-sized assets only; no effect or animation changes. */
+@media (max-width: 800px) {
+  .photo-bg-1 { background-image: url("images/psy-sized/photo-1-900.jpg"); }
+  .photo-bg-2 { background-image: url("images/psy-sized/photo-2-900.jpg"); }
+  .photo-bg-3 { background-image: url("images/psy-sized/photo-3-900.jpg"); }
+  .photo-bg-4 { background-image: url("images/psy-sized/photo-4-900.jpg"); }
+  .photo-bg-5 { background-image: url("images/psy-sized/photo-5-900.jpg"); }
+  .photo-bg-6 { background-image: url("images/psy-sized/photo-6-900.jpg"); }
+}</style>
+
+<style id="psychedelic-performance-v24">
+/* V24 performance-only containment and offscreen animation suspension. */
+.psy-frame {
+    contain: paint;
+}
+
+.psy-frame.psy-offscreen,
+.psy-frame.psy-offscreen img,
+.psy-frame.psy-offscreen::before,
+.psy-frame.psy-offscreen::after {
+    animation-play-state: paused !important;
+}
+
+body.psy-page-hidden,
+body.psy-page-hidden::before,
+body.psy-page-hidden::after,
+body.psy-page-hidden .photo-bg,
+body.psy-page-hidden .psy-frame,
+body.psy-page-hidden .psy-frame img,
+body.psy-page-hidden .psy-frame::before,
+body.psy-page-hidden .psy-frame::after {
+    animation-play-state: paused !important;
+}
+</style>
+
 </head>
 <body class="psychedelic-mode"><a class="mode-switch end-trip" href="index.html">End Trip</a><div aria-hidden="true" class="photo-backgrounds"><div class="photo-bg photo-bg-1"></div><div class="photo-bg photo-bg-2"></div><div class="photo-bg photo-bg-3"></div><div class="photo-bg photo-bg-4"></div><div class="photo-bg photo-bg-5"></div><div class="photo-bg photo-bg-6"></div></div><canvas aria-hidden="true" id="color-field"></canvas><svg aria-hidden="true" height="0" id="psy-filter-defs" style="position:absolute;overflow:hidden" width="0">
 <defs>
@@ -2295,14 +3222,14 @@ than traveling horizontally across the image.
 </header>
 <main>
 <section class="hero-pair">
-<div class="psy-frame psy-frame-1 pattern-rings"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/photo-1.jpg"/></div>
-<div class="psy-frame psy-frame-2 pattern-waves"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/photo-2.jpg"/></div>
+<div class="psy-frame psy-frame-1 pattern-rings"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/psy-sized/photo-1-1400.jpg" srcset="images/psy-sized/photo-1-900.jpg 900w, images/psy-sized/photo-1-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 541px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-2 pattern-waves"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/psy-sized/photo-2-1400.jpg" srcset="images/psy-sized/photo-2-900.jpg 900w, images/psy-sized/photo-2-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 541px" width="1400" height="1750"/></div>
 </section>
 <section class="gallery-row">
-<div class="psy-frame psy-frame-1 pattern-prisms"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-crushed" src="images/photo-3.jpg"/></div>
-<div class="psy-frame psy-frame-2 pattern-kaleidoscope"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-inverted-midtones" src="images/photo-4.jpg"/></div>
-<div class="psy-frame psy-frame-3 pattern-spiral"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/photo-5.jpg"/></div>
-<div class="psy-frame psy-frame-4 pattern-blobs"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/photo-6.jpg"/></div>
+<div class="psy-frame psy-frame-1 pattern-prisms"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-crushed" src="images/psy-sized/photo-3-1400.jpg" srcset="images/psy-sized/photo-3-900.jpg 900w, images/psy-sized/photo-3-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-2 pattern-kaleidoscope"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-inverted-midtones" src="images/psy-sized/photo-4-1400.jpg" srcset="images/psy-sized/photo-4-900.jpg 900w, images/psy-sized/photo-4-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-3 pattern-spiral"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/psy-sized/photo-5-1400.jpg" srcset="images/psy-sized/photo-5-900.jpg 900w, images/psy-sized/photo-5-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-4 pattern-blobs"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/psy-sized/photo-6-1400.jpg" srcset="images/psy-sized/photo-6-900.jpg 900w, images/psy-sized/photo-6-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
 </section>
 <section class="contact">
 <h2>Contact</h2>
@@ -2328,5 +3255,239 @@ than traveling horizontally across the image.
 */
 
 </script>
+
+<script id="psychedelic-effects-v24-performance-script">
+/* V24 performance-only runtime.
+   Visual formulas and curve parameters are unchanged from V21.
+   Work is limited to frames that are visible or about to enter the viewport.
+*/
+(function () {
+    const NS = "http://www.w3.org/2000/svg";
+    const SOLAR_INTERVAL_MS = 1000 / 30;
+    const PRELOAD_MARGIN_PX = 600;
+    const frameStates = new Map();
+    const solarStates = { photo2: false, photo5: false };
+    let solarTimer = 0;
+    let solarRaf = 0;
+
+    function clamp(v, a, b) {
+        return Math.max(a, Math.min(b, v));
+    }
+
+    function mix(a, b, t) {
+        return a + (b - a) * t;
+    }
+
+    function ensureDefs() {
+        let svg = document.getElementById("v21-solar-svg");
+        if (svg) return svg.querySelector("defs");
+
+        svg = document.createElementNS(NS, "svg");
+        svg.setAttribute("id", "v21-solar-svg");
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("width", "0");
+        svg.setAttribute("height", "0");
+        svg.style.position = "absolute";
+        svg.style.overflow = "hidden";
+
+        const defs = document.createElementNS(NS, "defs");
+        svg.appendChild(defs);
+        document.body.appendChild(svg);
+        return defs;
+    }
+
+    function createAnimatedSolarFilter(id) {
+        const defs = ensureDefs();
+        if (document.getElementById(id)) {
+            return {
+                r: document.getElementById(id + "-r"),
+                g: document.getElementById(id + "-g"),
+                b: document.getElementById(id + "-b"),
+                sat: document.getElementById(id + "-sat")
+            };
+        }
+
+        const filter = document.createElementNS(NS, "filter");
+        filter.setAttribute("id", id);
+        filter.setAttribute("color-interpolation-filters", "sRGB");
+
+        const comp = document.createElementNS(NS, "feComponentTransfer");
+        const r = document.createElementNS(NS, "feFuncR");
+        const g = document.createElementNS(NS, "feFuncG");
+        const b = document.createElementNS(NS, "feFuncB");
+        r.setAttribute("id", id + "-r");
+        g.setAttribute("id", id + "-g");
+        b.setAttribute("id", id + "-b");
+        r.setAttribute("type", "table");
+        g.setAttribute("type", "table");
+        b.setAttribute("type", "table");
+        comp.appendChild(r);
+        comp.appendChild(g);
+        comp.appendChild(b);
+
+        const sat = document.createElementNS(NS, "feColorMatrix");
+        sat.setAttribute("id", id + "-sat");
+        sat.setAttribute("type", "saturate");
+        sat.setAttribute("values", "1.65");
+
+        filter.appendChild(comp);
+        filter.appendChild(sat);
+        defs.appendChild(filter);
+        return { r, g, b, sat };
+    }
+
+    const photo2Filter = createAnimatedSolarFilter("curve-solar-photo2");
+    const photo5Filter = createAnimatedSolarFilter("curve-solar-photo5");
+    const photo2Frame = document.querySelector(".hero-pair .psy-frame:nth-child(2)");
+    const photo5Frame = document.querySelector(".gallery-row .psy-frame:nth-child(3)");
+    const photo2Img = photo2Frame && photo2Frame.querySelector("img");
+    const photo5Img = photo5Frame && photo5Frame.querySelector("img");
+
+    if (photo2Img) photo2Img.style.filter = 'url("#curve-solar-photo2")';
+    if (photo5Img) photo5Img.style.filter = 'url("#curve-solar-photo5")';
+
+    const baseR = [0.08, 0.95, 0.28, 1.00, 0.50, 0.82, 0.98];
+    const baseG = [0.12, 0.30, 1.00, 0.35, 0.82, 0.22, 0.92];
+    const baseB = [0.65, 0.18, 0.98, 0.28, 1.00, 0.44, 0.88];
+    const invR = [0.96, 0.32, 0.88, 0.10, 0.78, 0.26, 0.08];
+    const invG = [0.86, 0.18, 0.24, 0.92, 0.26, 0.98, 0.16];
+    const invB = [0.18, 0.92, 0.20, 0.88, 0.22, 0.76, 0.14];
+
+    const buffers = {
+        p2r: new Float64Array(7), p2g: new Float64Array(7), p2b: new Float64Array(7),
+        p5r: new Float64Array(7), p5g: new Float64Array(7), p5b: new Float64Array(7)
+    };
+
+    function modulateCurveInto(out, base, inv, t, phase, depth, crawl, wobble) {
+        const invertBlend = (Math.sin(t * 0.00055 + phase) + 1) / 2;
+        const expandBlend = (Math.sin(t * 0.00087 + phase * 1.7) + 1) / 2;
+        const crawlBlend = (Math.sin(t * 0.00125 + phase * 2.4) + 1) / 2;
+        const crawlOffset = Math.floor(crawlBlend * (base.length - 1));
+        const center = (base.length - 1) / 2;
+
+        for (let i = 0; i < base.length; i++) {
+            const idxPhase = phase + i * crawl;
+            const drift = Math.sin(t * 0.0014 + idxPhase) * depth;
+            const ripple = Math.cos(t * 0.00096 + idxPhase * 1.4) * wobble;
+            const expandedIndex = mix(i, center, expandBlend * 0.35);
+            const neighborIndex = clamp(Math.round(expandedIndex), 0, base.length - 1);
+            const expandedBase = mix(base[i], base[neighborIndex], expandBlend * 0.34);
+            const inverted = mix(expandedBase, inv[i], invertBlend * 0.58);
+            const crawled = mix(inverted, base[(i + crawlOffset) % base.length], 0.16);
+            out[i] = clamp(crawled + drift + ripple, 0, 1);
+        }
+    }
+
+    function formatTable(values) {
+        let result = values[0].toFixed(3);
+        for (let i = 1; i < values.length; i++) {
+            result += " " + values[i].toFixed(3);
+        }
+        return result;
+    }
+
+    function setAttributeIfChanged(node, name, value) {
+        if (node.getAttribute(name) !== value) node.setAttribute(name, value);
+    }
+
+    function updatePhoto2(now) {
+        modulateCurveInto(buffers.p2r, baseR, invR, now, 0.2, 0.085, 0.48, 0.055);
+        modulateCurveInto(buffers.p2g, baseG, invG, now, 1.6, 0.090, 0.54, 0.060);
+        modulateCurveInto(buffers.p2b, baseB, invB, now, 2.8, 0.095, 0.60, 0.058);
+        const saturation = (1.45 + ((Math.sin(now * 0.0011) + 1) / 2) * 0.55).toFixed(3);
+        setAttributeIfChanged(photo2Filter.r, "tableValues", formatTable(buffers.p2r));
+        setAttributeIfChanged(photo2Filter.g, "tableValues", formatTable(buffers.p2g));
+        setAttributeIfChanged(photo2Filter.b, "tableValues", formatTable(buffers.p2b));
+        setAttributeIfChanged(photo2Filter.sat, "values", saturation);
+    }
+
+    function updatePhoto5(now) {
+        modulateCurveInto(buffers.p5r, baseR, invR, now, 0.9, 0.105, 0.62, 0.070);
+        modulateCurveInto(buffers.p5g, baseG, invG, now, 2.2, 0.110, 0.70, 0.074);
+        modulateCurveInto(buffers.p5b, baseB, invB, now, 3.5, 0.118, 0.78, 0.072);
+        const saturation = (1.55 + ((Math.sin(now * 0.00133 + 1.4) + 1) / 2) * 0.62).toFixed(3);
+        setAttributeIfChanged(photo5Filter.r, "tableValues", formatTable(buffers.p5r));
+        setAttributeIfChanged(photo5Filter.g, "tableValues", formatTable(buffers.p5g));
+        setAttributeIfChanged(photo5Filter.b, "tableValues", formatTable(buffers.p5b));
+        setAttributeIfChanged(photo5Filter.sat, "values", saturation);
+    }
+
+    function solarIsNeeded() {
+        return document.visibilityState === "visible" && (solarStates.photo2 || solarStates.photo5);
+    }
+
+    function stopSolarLoop() {
+        if (solarTimer) clearTimeout(solarTimer);
+        if (solarRaf) cancelAnimationFrame(solarRaf);
+        solarTimer = 0;
+        solarRaf = 0;
+    }
+
+    function scheduleSolarLoop() {
+        if (!solarIsNeeded() || solarTimer || solarRaf) return;
+        solarTimer = window.setTimeout(function () {
+            solarTimer = 0;
+            if (!solarIsNeeded()) return;
+            solarRaf = requestAnimationFrame(solarStep);
+        }, SOLAR_INTERVAL_MS);
+    }
+
+    function solarStep(now) {
+        solarRaf = 0;
+        if (!solarIsNeeded()) return;
+        if (solarStates.photo2) updatePhoto2(now);
+        if (solarStates.photo5) updatePhoto5(now);
+        scheduleSolarLoop();
+    }
+
+    function updateSolarLoopState() {
+        if (solarIsNeeded()) scheduleSolarLoop();
+        else stopSolarLoop();
+    }
+
+    function setFrameState(frame, nearViewport) {
+        if (!frame || frameStates.get(frame) === nearViewport) return;
+        frameStates.set(frame, nearViewport);
+        frame.classList.toggle("psy-offscreen", !nearViewport);
+        if (frame === photo2Frame) solarStates.photo2 = nearViewport;
+        if (frame === photo5Frame) solarStates.photo5 = nearViewport;
+        updateSolarLoopState();
+    }
+
+    const frames = Array.from(document.querySelectorAll(".psy-frame"));
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(function (entries) {
+            for (const entry of entries) {
+                setFrameState(entry.target, entry.isIntersecting);
+            }
+        }, {
+            root: null,
+            rootMargin: PRELOAD_MARGIN_PX + "px 0px " + PRELOAD_MARGIN_PX + "px 0px",
+            threshold: 0
+        });
+
+        for (const frame of frames) {
+            const rect = frame.getBoundingClientRect();
+            const initiallyNear = rect.bottom >= -PRELOAD_MARGIN_PX && rect.top <= window.innerHeight + PRELOAD_MARGIN_PX;
+            setFrameState(frame, initiallyNear);
+            observer.observe(frame);
+        }
+    } else {
+        for (const frame of frames) setFrameState(frame, true);
+    }
+
+    function handleVisibilityChange() {
+        const hidden = document.visibilityState !== "visible";
+        document.body.classList.toggle("psy-page-hidden", hidden);
+        updateSolarLoopState();
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange, { passive: true });
+    window.addEventListener("pagehide", stopSolarLoop, { passive: true });
+    window.addEventListener("pageshow", updateSolarLoopState, { passive: true });
+    handleVisibilityChange();
+})();
+</script>
+
 </body>
 </html>
