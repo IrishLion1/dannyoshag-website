@@ -3500,6 +3500,97 @@ body.psy-page-hidden .psy-frame::after {
 }
 </style>
 
+
+<style id="v24-2-7-mobile-thermal-pass">
+/* V24.2.7 — mobile thermal pass
+   Preserve the desktop design. On phone-sized screens, remove the most
+   expensive continuous filter repainting while retaining the movement,
+   color, and overall psychedelic composition.
+*/
+@media (max-width: 800px) {
+    /*
+    Six full-screen photographic layers were continuously animating
+    transform, opacity, and hue-rotate. Keep all six layers and their
+    movement/pulsing, but use a fixed distinct hue for each layer.
+    */
+    .photo-bg {
+        will-change: transform, opacity !important;
+    }
+
+    .photo-bg-1 {
+        --bg-hue: 18deg;
+        animation:
+            bg-drift-1 9s ease-in-out infinite alternate,
+            bg-pulse-1 4.8s ease-in-out infinite !important;
+    }
+
+    .photo-bg-2 {
+        --bg-hue: -42deg;
+        animation:
+            bg-drift-2 11s ease-in-out infinite alternate-reverse,
+            bg-pulse-2 5.2s ease-in-out infinite !important;
+    }
+
+    .photo-bg-3 {
+        --bg-hue: 92deg;
+        animation:
+            bg-drift-3 10s ease-in-out infinite alternate,
+            bg-pulse-3 5.6s ease-in-out infinite !important;
+    }
+
+    .photo-bg-4 {
+        --bg-hue: -118deg;
+        animation:
+            bg-drift-4 12s ease-in-out infinite alternate-reverse,
+            bg-pulse-4 4.9s ease-in-out infinite !important;
+    }
+
+    .photo-bg-5 {
+        --bg-hue: 168deg;
+        animation:
+            bg-drift-5 10.6s ease-in-out infinite alternate,
+            bg-pulse-5 6s ease-in-out infinite !important;
+    }
+
+    .photo-bg-6 {
+        --bg-hue: -205deg;
+        animation:
+            bg-drift-6 11.5s ease-in-out infinite alternate-reverse,
+            bg-pulse-6 5.4s ease-in-out infinite !important;
+    }
+
+    /*
+    Photo 3 keeps its modulating neon mapping, but its overlay hue is
+    quantized rather than repainted continuously.
+    */
+    .pattern-prisms::after {
+        animation:
+            prism-spin 22s linear infinite reverse,
+            prism-scale 8s ease-in-out infinite alternate,
+            v24-2-prism-color-drift 9.6s steps(28, end) infinite !important;
+    }
+
+    /*
+    Photo 4 keeps the bold shards, zooming bullseye, and color changes.
+    Only the hue-filter portions are quantized to avoid full-size filter
+    rerasterization on every display frame.
+    */
+    .gallery-row .psy-frame:nth-child(2)::before,
+    .pattern-kaleidoscope::before {
+        animation:
+            v2423-photo4-shards 7.8s cubic-bezier(.55,.08,.34,.98) infinite,
+            v2423-photo4-shard-hue 10.4s steps(32, end) infinite !important;
+    }
+
+    .gallery-row .psy-frame:nth-child(2)::after,
+    .pattern-kaleidoscope::after {
+        animation:
+            v2425-photo4-bullseye-fullframe 6.8s ease-in-out infinite,
+            v2424-photo4-bullseye-hue 8.6s steps(30, end) infinite !important;
+    }
+}
+</style>
+
 </head>
 <body class="psychedelic-mode"><a class="mode-switch end-trip" href="index.html">End Trip</a><div aria-hidden="true" class="photo-backgrounds"><div class="photo-bg photo-bg-1"></div><div class="photo-bg photo-bg-2"></div><div class="photo-bg photo-bg-3"></div><div class="photo-bg photo-bg-4"></div><div class="photo-bg photo-bg-5"></div><div class="photo-bg photo-bg-6"></div></div><canvas aria-hidden="true" id="color-field"></canvas><svg aria-hidden="true" height="0" id="psy-filter-defs" style="position:absolute;overflow:hidden" width="0">
 <defs>
@@ -3547,14 +3638,14 @@ body.psy-page-hidden .psy-frame::after {
 </header>
 <main>
 <section class="hero-pair">
-<div class="psy-frame psy-frame-1 pattern-rings"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/psy-sized/photo-1-1400.jpg" srcset="images/psy-sized/photo-1-900.jpg 900w, images/psy-sized/photo-1-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 541px" width="1400" height="1750"/></div>
-<div class="psy-frame psy-frame-2 pattern-waves"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/psy-sized/photo-2-1400.jpg" srcset="images/psy-sized/photo-2-900.jpg 900w, images/psy-sized/photo-2-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 541px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-1 pattern-rings"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" decoding="async" fetchpriority="high" src="images/psy-sized/photo-1-1400.jpg" srcset="images/psy-sized/photo-1-900.jpg 900w, images/psy-sized/photo-1-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 541px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-2 pattern-waves"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" decoding="async" fetchpriority="high" src="images/psy-sized/photo-2-1400.jpg" srcset="images/psy-sized/photo-2-900.jpg 900w, images/psy-sized/photo-2-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 541px" width="1400" height="1750"/></div>
 </section>
 <section class="gallery-row">
-<div class="psy-frame psy-frame-1 pattern-prisms"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-crushed" src="images/psy-sized/photo-3-1400.jpg" srcset="images/psy-sized/photo-3-900.jpg 900w, images/psy-sized/photo-3-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
-<div class="psy-frame psy-frame-2 pattern-kaleidoscope"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-inverted-midtones" src="images/psy-sized/photo-4-1400.jpg" srcset="images/psy-sized/photo-4-900.jpg 900w, images/psy-sized/photo-4-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
-<div class="psy-frame psy-frame-3 pattern-spiral"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/psy-sized/photo-5-1400.jpg" srcset="images/psy-sized/photo-5-900.jpg 900w, images/psy-sized/photo-5-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
-<div class="psy-frame psy-frame-4 pattern-blobs"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/psy-sized/photo-6-1400.jpg" srcset="images/psy-sized/photo-6-900.jpg 900w, images/psy-sized/photo-6-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-1 pattern-prisms"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-crushed" decoding="async" loading="lazy" src="images/psy-sized/photo-3-1400.jpg" srcset="images/psy-sized/photo-3-900.jpg 900w, images/psy-sized/photo-3-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-2 pattern-kaleidoscope"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-inverted-midtones" decoding="async" loading="lazy" src="images/psy-sized/photo-4-1400.jpg" srcset="images/psy-sized/photo-4-900.jpg 900w, images/psy-sized/photo-4-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-3 pattern-spiral"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" decoding="async" loading="lazy" src="images/psy-sized/photo-5-1400.jpg" srcset="images/psy-sized/photo-5-900.jpg 900w, images/psy-sized/photo-5-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
+<div class="psy-frame psy-frame-4 pattern-blobs"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" decoding="async" loading="lazy" src="images/psy-sized/photo-6-1400.jpg" srcset="images/psy-sized/photo-6-900.jpg 900w, images/psy-sized/photo-6-1400.jpg 1400w" sizes="(max-width: 800px) calc(100vw - 32px), 287px" width="1400" height="1750"/></div>
 </section>
 <section class="contact">
 <h2>Contact</h2>
@@ -3588,8 +3679,8 @@ body.psy-page-hidden .psy-frame::after {
 */
 (function () {
     const NS = "http://www.w3.org/2000/svg";
-    const SOLAR_INTERVAL_MS = 1000 / 30;
-    const PRELOAD_MARGIN_PX = 600;
+    const SOLAR_INTERVAL_MS = 1000 / 15;
+    const PRELOAD_MARGIN_PX = 160;
     const frameStates = new Map();
     const solarStates = { photo2: false, photo5: false };
     let solarTimer = 0;
@@ -3822,8 +3913,8 @@ body.psy-page-hidden .psy-frame::after {
 */
 (function () {
     const NS = "http://www.w3.org/2000/svg";
-    const INTERVAL_MS = 1000 / 24;
-    const PRELOAD_MARGIN_PX = 600;
+    const INTERVAL_MS = 1000 / 12;
+    const PRELOAD_MARGIN_PX = 160;
 
     function clamp(v, a, b) {
         return Math.max(a, Math.min(b, v));

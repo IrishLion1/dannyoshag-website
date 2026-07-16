@@ -350,3 +350,21 @@ Only the Photo 4 bullseye layer was changed:
 - Raised the minimum zoom level so its rectangular edges never become visible
 - Kept the zooming motion and bold color shift
 - No other effects or photos changed
+
+
+## V24.2.7 — mobile thermal pass
+
+Built directly from the uploaded live GitHub version.
+
+Desktop appearance and behavior are unchanged.
+
+Phone-sized psychedelic mode changes:
+- Reduced animated Photo 2/5 SVG-curve updates from 30 fps to 15 fps
+- Reduced animated Photo 3 SVG-curve updates from 24 fps to 12 fps
+- Reduced the offscreen activation margin from 600px to 160px
+- Kept all six warped background photographs, but stopped continuously
+  hue-rotating their full-screen layers on mobile
+- Preserved distinct fixed hues plus transform and opacity movement for those layers
+- Quantized Photo 3 and Photo 4 hue-filter repainting while preserving their motion
+- Added async decoding and lazy loading hints to lower-page photographs
+- Normal mode and desktop psychedelic mode are unchanged
