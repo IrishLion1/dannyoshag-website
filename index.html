@@ -10,93 +10,162 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            padding-left: 24px;
+            padding-right: 24px;
+            text-align: center;
+        }
+
+        main {
+            width: 100%;
+        }
+
+        .hero-pair,
+        .gallery-row {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
         .hero-pair {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px;
-            width: min(1100px, calc(100% - 48px));
-            max-width: 1100px;
-            margin: 0 auto 18px;
-        }
-
-        .hero-pair img,
-        .gallery-row img {
-            display: block;
-            width: 100%;
-            height: auto;
+            max-width: 1148px;
+            margin-bottom: 18px;
         }
 
         .gallery-row {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 18px;
-            width: min(1200px, calc(100% - 48px));
-            max-width: 1200px;
+            max-width: 1248px;
+        }
+
+        .hero-pair img,
+        .gallery-row img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
             margin: 0 auto;
         }
 
         .contact {
             width: 100%;
+            max-width: none;
+            margin: 0;
             padding: 64px 24px 72px;
             text-align: center;
         }
 
+        .contact h2,
         .contact p {
-            margin: 10px 0;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
         }
 
         .contact a {
             color: inherit;
-            text-decoration: underline;
+            overflow-wrap: anywhere;
         }
 
         @media (max-width: 800px) {
-            .hero-pair { grid-template-columns: 1fr; }
-            .gallery-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
-        }
+            header {
+                padding-top: 36px;
+                padding-bottom: 32px;
+            }
 
-        @media (max-width: 520px) {
-            .gallery-row { grid-template-columns: 1fr; }
+            header h1 {
+                font-size: clamp(2rem, 10vw, 3rem);
+            }
+
+            .hero-pair,
+            .gallery-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-width: 560px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .hero-pair {
+                margin-bottom: 16px;
+            }
+
+            .contact {
+                padding: 48px 16px 64px;
+            }
         }
     </style>
 </head>
 
 <body>
-<header>
-    <h1>Danny O'Shaughnessy</h1>
-    <p>Concert Photographer<br>New York City</p>
-</header>
-
-<main>
-    <section class="hero-pair">
-        <img src="images/photo-1.jpg" alt="Concert photograph by Danny O'Shaughnessy">
-        <img src="images/photo-2.jpg" alt="Concert photograph by Danny O'Shaughnessy">
-    </section>
-
-    <section class="gallery-row">
-        <img src="images/photo-3.jpg" alt="Concert photograph">
-        <img src="images/photo-4.jpg" alt="Concert photograph">
-        <img src="images/photo-5.jpg" alt="Concert photograph">
-        <img src="images/photo-6.jpg" alt="Concert photograph">
-    </section>
-
-    <section class="contact">
-        <h2>Contact</h2>
+    <header>
+        <h1>Danny O'Shaughnessy</h1>
 
         <p>
-            <strong>Instagram:</strong>
-            <a href="https://instagram.com/dannyoshag" target="_blank" rel="noopener noreferrer">
-                @dannyoshag
-            </a>
+            Concert Photographer<br>
+            New York City
         </p>
+    </header>
 
-        <p>
-            <strong>Email:</strong>
-            <a href="mailto:danny@dannyoshag.com">
-                danny@dannyoshag.com
-            </a>
-        </p>
-    </section>
-</main>
+    <main>
+        <section class="hero-pair">
+            <img
+                src="images/photo-1.jpg"
+                alt="Concert photograph by Danny O'Shaughnessy"
+            >
+
+            <img
+                src="images/photo-2.jpg"
+                alt="Concert photograph by Danny O'Shaughnessy"
+            >
+        </section>
+
+        <section class="gallery-row">
+            <img src="images/photo-3.jpg" alt="Concert photograph by Danny O'Shaughnessy">
+            <img src="images/photo-4.jpg" alt="Concert photograph by Danny O'Shaughnessy">
+            <img src="images/photo-5.jpg" alt="Concert photograph by Danny O'Shaughnessy">
+            <img src="images/photo-6.jpg" alt="Concert photograph by Danny O'Shaughnessy">
+        </section>
+
+        <section class="contact">
+            <h2>Contact</h2>
+
+            <p>
+                <a
+                    href="https://instagram.com/dannyoshag"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram
+                </a>
+            </p>
+
+            <p>
+                <a href="mailto:danny@dannyoshag.com">
+                    danny@dannyoshag.com
+                </a>
+            </p>
+        </section>
+    </main>
 </body>
 </html>
