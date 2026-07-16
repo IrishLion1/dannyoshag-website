@@ -10,7 +10,6 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
     <style>
-        /* Homepage layout overrides */
         .hero-pair {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -18,10 +17,10 @@
             width: min(1100px, calc(100% - 48px));
             max-width: 1100px;
             margin: 0 auto 18px;
-            padding: 0;
         }
 
-        .hero-pair img {
+        .hero-pair img,
+        .gallery-row img {
             display: block;
             width: 100%;
             height: auto;
@@ -34,96 +33,70 @@
             width: min(1200px, calc(100% - 48px));
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0;
-        }
-
-        .gallery-row img {
-            display: block;
-            width: 100%;
-            height: auto;
         }
 
         .contact {
             width: 100%;
-            max-width: none;
-            margin: 0;
             padding: 64px 24px 72px;
             text-align: center;
-            box-sizing: border-box;
         }
 
-        .contact h2,
         .contact p {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 10px 0;
         }
 
         .contact a {
             color: inherit;
+            text-decoration: underline;
         }
 
         @media (max-width: 800px) {
-            .hero-pair {
-                grid-template-columns: 1fr;
-            }
-
-            .gallery-row {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
+            .hero-pair { grid-template-columns: 1fr; }
+            .gallery-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
         }
 
         @media (max-width: 520px) {
-            .gallery-row {
-                grid-template-columns: 1fr;
-            }
+            .gallery-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Danny O'Shaughnessy</h1>
+<header>
+    <h1>Danny O'Shaughnessy</h1>
+    <p>Concert Photographer<br>New York City</p>
+</header>
+
+<main>
+    <section class="hero-pair">
+        <img src="images/photo-1.jpg" alt="Concert photograph by Danny O'Shaughnessy">
+        <img src="images/photo-2.jpg" alt="Concert photograph by Danny O'Shaughnessy">
+    </section>
+
+    <section class="gallery-row">
+        <img src="images/photo-3.jpg" alt="Concert photograph">
+        <img src="images/photo-4.jpg" alt="Concert photograph">
+        <img src="images/photo-5.jpg" alt="Concert photograph">
+        <img src="images/photo-6.jpg" alt="Concert photograph">
+    </section>
+
+    <section class="contact">
+        <h2>Contact</h2>
 
         <p>
-            Concert Photographer<br>
-            New York City
+            <strong>Instagram:</strong>
+            <a href="https://instagram.com/dannyoshag" target="_blank" rel="noopener noreferrer">
+                @dannyoshag
+            </a>
         </p>
-    </header>
 
-    <main>
-        <section class="hero-pair">
-            <img
-                src="images/photo-1.jpg"
-                alt="Concert photograph by Danny O'Shaughnessy"
-            >
-
-            <img
-                src="images/photo-2.jpg"
-                alt="Concert photograph by Danny O'Shaughnessy"
-            >
-        </section>
-
-        <section class="gallery-row">
-            <img src="images/photo-3.jpg" alt="Concert photograph">
-            <img src="images/photo-4.jpg" alt="Concert photograph">
-            <img src="images/photo-5.jpg" alt="Concert photograph">
-            <img src="images/photo-6.jpg" alt="Concert photograph">
-        </section>
-
-        <section class="contact">
-            <h2>Contact</h2>
-
-            <p>
-                <a
-                    href="https://instagram.com/dannyoshag"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    @dannyoshag
-                </a>
-            </p>
-        </section>
-    </main>
+        <p>
+            <strong>Email:</strong>
+            <a href="mailto:danny@dannyoshag.com">
+                danny@dannyoshag.com
+            </a>
+        </p>
+    </section>
+</main>
 </body>
 </html>
