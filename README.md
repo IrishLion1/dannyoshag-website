@@ -368,3 +368,17 @@ Phone-sized psychedelic mode changes:
 - Quantized Photo 3 and Photo 4 hue-filter repainting while preserving their motion
 - Added async decoding and lazy loading hints to lower-page photographs
 - Normal mode and desktop psychedelic mode are unchanged
+
+
+## V24.2.10 — fade transition + synchronized page position
+
+Built from the uploaded V24.2.7 mobile thermal version.
+
+Changes:
+- Clicking `Escape Reality` fades the Normal page out and the psychedelic page in
+- Clicking `End Trip` fades the psychedelic page out and the Normal page in
+- The destination restores the same vertical location on the page
+- Uses exact scroll position when page heights match and proportional position as a fallback
+- Handles browser back-forward cache restoration
+- Added intrinsic image dimensions to the Normal page to prevent layout shift during restoration
+- No psychedelic visual effects were changed

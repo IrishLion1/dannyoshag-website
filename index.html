@@ -130,6 +130,50 @@ z-index:9999;
 .back-home:hover{background:rgba(255,255,255,.12);}
 
 </style>
+
+<script id="mode-page-transition-bootstrap">
+(function () {
+    const KEY = "dannyoshag-mode-transition-v1";
+
+    function normalizedPath(pathname) {
+        let value = pathname || "/";
+        if (value.endsWith("/")) value += "index.html";
+        return value.replace(/\/+/g, "/");
+    }
+
+    try {
+        if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+        const state = JSON.parse(sessionStorage.getItem(KEY) || "null");
+        const isFresh = state && Date.now() - Number(state.createdAt || 0) < 15000;
+        const isTarget = isFresh && normalizedPath(location.pathname) === state.targetPath;
+        if (isTarget) document.documentElement.classList.add("mode-transition-entry");
+    } catch (_) {}
+})();
+</script>
+
+
+<style id="mode-page-transition-style">
+/* V24.2.10 — shared mode-switch transition */
+body {
+    transition: opacity 460ms cubic-bezier(.4, 0, .2, 1) !important;
+}
+
+html.mode-transition-entry body,
+html.mode-transition-exit body {
+    opacity: 0 !important;
+}
+
+html.mode-transition-exit .mode-switch {
+    pointer-events: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body {
+        transition-duration: 1ms !important;
+    }
+}
+</style>
+
 </head>
 <body><a class="mode-switch escape-reality" href="psychedelic.html">Escape Reality</a>
 
@@ -142,14 +186,14 @@ z-index:9999;
 </header>
 <main>
 <section class="hero-pair">
-<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-1.jpg"/>
-<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-2.jpg"/>
+<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-1.jpg" width="3987" height="4985"/>
+<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-2.jpg" width="1622" height="2027"/>
 </section>
 <section class="gallery-row">
-<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-3.jpg"/>
-<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-4.jpg"/>
-<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-5.jpg"/>
-<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-6.jpg"/>
+<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-3.jpg" width="3264" height="4080"/>
+<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-4.jpg" width="2556" height="3195"/>
+<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-5.jpg" width="4155" height="5194"/>
+<img alt="Concert photograph by Danny O'Shaughnessy" src="images/photo-6.jpg" width="3694" height="4617"/>
 </section>
 <section class="contact">
 <h2>Contact</h2>
@@ -167,5 +211,105 @@ z-index:9999;
 </p>
 </section>
 </main>
+
+<script id="mode-page-transition-runtime">
+(function () {
+    const KEY = "dannyoshag-mode-transition-v1";
+    const EXIT_MS = 460;
+
+    function normalizedPath(pathname) {
+        let value = pathname || "/";
+        if (value.endsWith("/")) value += "index.html";
+        return value.replace(/\/+/g, "/");
+    }
+
+    function readState() {
+        try {
+            const state = JSON.parse(sessionStorage.getItem(KEY) || "null");
+            if (!state) return null;
+            if (Date.now() - Number(state.createdAt || 0) >= 15000) return null;
+            if (normalizedPath(location.pathname) !== state.targetPath) return null;
+            return state;
+        } catch (_) {
+            return null;
+        }
+    }
+
+    function restorePosition(state) {
+        if (!state) return;
+        const root = document.documentElement;
+        const maxScroll = Math.max(0, root.scrollHeight - window.innerHeight);
+        const sourceMax = Math.max(0, Number(state.sourceMaxScroll) || 0);
+        const exactY = Math.min(maxScroll, Math.max(0, Number(state.scrollY) || 0));
+        const ratioY = Math.min(maxScroll, Math.max(0, Number(state.scrollRatio) || 0) * maxScroll);
+        const heightsAreClose = sourceMax > 0 && Math.abs(maxScroll - sourceMax) / sourceMax < 0.05;
+        window.scrollTo(0, heightsAreClose ? exactY : ratioY);
+    }
+
+    const arrivalState = readState();
+
+    if (arrivalState) {
+        const reveal = function () {
+            restorePosition(arrivalState);
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    document.documentElement.classList.remove("mode-transition-entry");
+                    try { sessionStorage.removeItem(KEY); } catch (_) {}
+                });
+            });
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", reveal, { once: true });
+        } else {
+            reveal();
+        }
+
+        window.addEventListener("load", function () {
+            restorePosition(arrivalState);
+        }, { once: true, passive: true });
+
+        window.addEventListener("pageshow", function () {
+            restorePosition(arrivalState);
+        }, { once: true, passive: true });
+    } else {
+        document.documentElement.classList.remove("mode-transition-entry");
+    }
+
+    const switchLink = document.querySelector("a.mode-switch[href]");
+    if (!switchLink) return;
+
+    switchLink.addEventListener("click", function (event) {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+        const destination = new URL(switchLink.href, location.href);
+        if (destination.origin !== location.origin) return;
+
+        event.preventDefault();
+
+        const root = document.documentElement;
+        const maxScroll = Math.max(0, root.scrollHeight - window.innerHeight);
+        const state = {
+            createdAt: Date.now(),
+            targetPath: normalizedPath(destination.pathname),
+            scrollY: window.scrollY,
+            sourceMaxScroll: maxScroll,
+            scrollRatio: maxScroll > 0 ? window.scrollY / maxScroll : 0
+        };
+
+        try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {}
+        document.documentElement.classList.add("mode-transition-exit");
+
+        window.setTimeout(function () {
+            location.assign(destination.href);
+        }, EXIT_MS);
+    });
+
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) document.documentElement.classList.remove("mode-transition-exit");
+    }, { passive: true });
+})();
+</script>
+
 </body>
 </html>
