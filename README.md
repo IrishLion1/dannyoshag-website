@@ -132,3 +132,27 @@ Navigation changes:
 - Reinserted exactly one `Escape Reality` button on `index.html`
 - Reinserted exactly one `End Trip` button on `psychedelic.html`
 - Disabled old `.mode-link` and `.psy-badge` styles
+
+
+## V16.2 — Psychedelic mode loading fix
+
+Likely cause of the live issue:
+- Instagram's in-app browser reused an older cached `psychedelic.css`, while the new HTML button loaded.
+
+Fixes:
+- Added cache-busting versions to `psychedelic.css`, `psychedelic.js`, and `styles.css`
+- Repaired SVG filter tag casing so the wonky color curves work in browsers
+- Preserved the single Escape Reality / End Trip navigation
+
+
+## V16.3 — Inline psychedelic effects
+
+The psychedelic page was navigating correctly, but its external stylesheet was not
+being applied on the live deployment.
+
+This version:
+- embeds all psychedelic CSS directly inside `psychedelic.html`
+- embeds psychedelic JavaScript directly inside `psychedelic.html`
+- removes reliance on the external psychedelic asset requests
+- includes a visible warm-color fallback to confirm the mode loaded
+- preserves the Normal page and Escape Reality / End Trip navigation

@@ -1418,3 +1418,10 @@ feel irregular rather than mechanically linear.
     content: none !important;
     display: none !important;
 }
+
+
+/* V16.2 deployment/cache diagnostic.
+   If this stylesheet loaded, the End Trip button receives a warm glow. */
+.psychedelic-mode .end-trip {
+    outline: 1px solid rgba(255, 210, 110, .72);
+}
