@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +8,80 @@
 
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <style>
+        /* Homepage layout overrides */
+        .hero-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            width: min(1100px, calc(100% - 48px));
+            max-width: 1100px;
+            margin: 0 auto 18px;
+            padding: 0;
+        }
+
+        .hero-pair img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .gallery-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            width: min(1200px, calc(100% - 48px));
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .gallery-row img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .contact {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 64px 24px 72px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .contact h2,
+        .contact p {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact a {
+            color: inherit;
+        }
+
+        @media (max-width: 800px) {
+            .hero-pair {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 520px) {
+            .gallery-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
     <header>
         <h1>Danny O'Shaughnessy</h1>
 
@@ -23,15 +92,19 @@
     </header>
 
     <main>
-
-        <section class="hero">
+        <section class="hero-pair">
             <img
                 src="images/photo-1.jpg"
-                alt="Concert photograph by Danny O'Shaughnessy">
+                alt="Concert photograph by Danny O'Shaughnessy"
+            >
+
+            <img
+                src="images/photo-2.jpg"
+                alt="Concert photograph by Danny O'Shaughnessy"
+            >
         </section>
 
-        <section class="grid">
-            <img src="images/photo-2.jpg" alt="Concert photograph">
+        <section class="gallery-row">
             <img src="images/photo-3.jpg" alt="Concert photograph">
             <img src="images/photo-4.jpg" alt="Concert photograph">
             <img src="images/photo-5.jpg" alt="Concert photograph">
@@ -45,14 +118,12 @@
                 <a
                     href="https://instagram.com/dannyoshag"
                     target="_blank"
-                    rel="noopener noreferrer">
+                    rel="noopener noreferrer"
+                >
                     @dannyoshag
                 </a>
             </p>
         </section>
-
     </main>
-
 </body>
-
 </html>
