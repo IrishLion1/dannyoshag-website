@@ -3500,53 +3500,6 @@ body.psy-page-hidden .psy-frame::after {
 }
 </style>
 
-
-<style id="v24-2-6-jazzier-image-motion">
-/* V24.2.6 — global image motion pass
-   Replace the predictable image shake with a more musical, irregular motion.
-   Keep all photo-specific color/effect stacks intact.
-*/
-
-.hero-pair img,
-.gallery-row img {
-    animation:
-        chromaSplit20 1.35s ease-in-out infinite alternate,
-        highlightBloom 6.8s ease-in-out infinite,
-        imageJazz26 var(--motionDur, 8.4s) linear infinite both !important;
-    animation-delay:
-        0s,
-        0s,
-        var(--motionDelay, 0s) !important;
-    will-change: transform, filter;
-}
-
-.hero-pair img:first-child { --motionDur: 8.7s; --motionDelay: -1.8s; }
-.hero-pair img:last-child  { --motionDur: 9.9s; --motionDelay: -4.1s; }
-.gallery-row .psy-frame:nth-child(1) img { --motionDur: 7.6s; --motionDelay: -2.2s; }
-.gallery-row .psy-frame:nth-child(2) img { --motionDur: 10.1s; --motionDelay: -6.0s; }
-.gallery-row .psy-frame:nth-child(3) img { --motionDur: 8.9s; --motionDelay: -3.4s; }
-.gallery-row .psy-frame:nth-child(4) img { --motionDur: 11.2s; --motionDelay: -7.1s; }
-
-@keyframes imageJazz26 {
-    0%   { transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1); }
-    6%   { transform: translate3d(.5px, -.3px, 0) rotate(.06deg) scale(1.001); }
-    13%  { transform: translate3d(-.8px, .6px, 0) rotate(-.10deg) scale(1.004); }
-    19%  { transform: translate3d(.4px, 1.0px, 0) rotate(.12deg) scale(1.002); }
-    27%  { transform: translate3d(-1.2px, -.7px, 0) rotate(-.16deg) scale(1.006); }
-    36%  { transform: translate3d(.9px, .2px, 0) rotate(.14deg) scale(1.003); }
-    44%  { transform: translate3d(-.3px, 1.2px, 0) rotate(-.05deg) scale(1.001); }
-    53%  { transform: translate3d(1.3px, -.9px, 0) rotate(.18deg) scale(1.007); }
-    61%  { transform: translate3d(-1.0px, -.2px, 0) rotate(-.12deg) scale(1.004); }
-    69%  { transform: translate3d(.7px, 1.1px, 0) rotate(.08deg) scale(1.002); }
-    74%  { transform: translate3d(-2.0px, .8px, 0) rotate(-.28deg) scale(1.008); }
-    76%  { transform: translate3d(1.5px, -.7px, 0) rotate(.22deg) scale(1.004); }
-    79%  { transform: translate3d(-.4px, .2px, 0) rotate(-.04deg) scale(1.001); }
-    87%  { transform: translate3d(.8px, .8px, 0) rotate(.10deg) scale(1.003); }
-    94%  { transform: translate3d(-.7px, -.6px, 0) rotate(-.09deg) scale(1.002); }
-    100% { transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1); }
-}
-</style>
-
 </head>
 <body class="psychedelic-mode"><a class="mode-switch end-trip" href="index.html">End Trip</a><div aria-hidden="true" class="photo-backgrounds"><div class="photo-bg photo-bg-1"></div><div class="photo-bg photo-bg-2"></div><div class="photo-bg photo-bg-3"></div><div class="photo-bg photo-bg-4"></div><div class="photo-bg photo-bg-5"></div><div class="photo-bg photo-bg-6"></div></div><canvas aria-hidden="true" id="color-field"></canvas><svg aria-hidden="true" height="0" id="psy-filter-defs" style="position:absolute;overflow:hidden" width="0">
 <defs>
