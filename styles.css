@@ -66,3 +66,52 @@ section {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Version 16 mode-switch buttons */
+.mode-switch {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 10000;
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(8, 8, 8, 0.78);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.mode-switch:hover,
+.mode-switch:focus-visible {
+    background: rgba(255, 255, 255, 0.92);
+    color: #0b0b0b;
+}
+
+@media (max-width: 700px) {
+    .mode-switch {
+        top: 10px;
+        right: 10px;
+        padding: 9px 11px;
+        font-size: 11px;
+    }
+}
+
+
+/* V16.1: guarantee only the current mode-switch button is visible */
+.mode-link,
+.psy-badge {
+    display: none !important;
+}
+
+.mode-switch::before,
+.mode-switch::after {
+    content: none !important;
+    display: none !important;
+}

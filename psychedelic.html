@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Danny O'Shaughnessy</title>
+<link href="styles.css" rel="stylesheet"/>
+<link href="psychedelic.css" rel="stylesheet"/>
+<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            padding-left: 24px;
+            padding-right: 24px;
+            text-align: center;
+        }
+
+        main {
+            width: 100%;
+        }
+
+        .hero-pair,
+        .gallery-row {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .hero-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            max-width: 1148px;
+            margin-bottom: 18px;
+        }
+
+        .gallery-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            max-width: 1248px;
+        }
+
+        .hero-pair img,
+        .gallery-row img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .contact {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 64px 24px 72px;
+            text-align: center;
+        }
+
+        .contact h2,
+        .contact p {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .contact a {
+            color: inherit;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 800px) {
+            header {
+                padding-top: 36px;
+                padding-bottom: 32px;
+            }
+
+            header h1 {
+                font-size: clamp(2rem, 10vw, 3rem);
+            }
+
+            .hero-pair,
+            .gallery-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-width: 560px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .hero-pair {
+                margin-bottom: 16px;
+            }
+
+            .contact {
+                padding: 48px 16px 64px;
+            }
+        }
+    </style>
+</head>
+<body class="psychedelic-mode"><a class="mode-switch end-trip" href="index.html">End Trip</a><div aria-hidden="true" class="photo-backgrounds"><div class="photo-bg photo-bg-1"></div><div class="photo-bg photo-bg-2"></div><div class="photo-bg photo-bg-3"></div><div class="photo-bg photo-bg-4"></div><div class="photo-bg photo-bg-5"></div><div class="photo-bg photo-bg-6"></div></div><canvas aria-hidden="true" id="color-field"></canvas><svg aria-hidden="true" height="0" id="psy-filter-defs" style="position:absolute;overflow:hidden" width="0">
+<defs>
+<!-- Non-monotonic channel curves: values intentionally rise, dip, and rise again. -->
+<filter color-interpolation-filters="sRGB" id="curve-acid">
+<fecomponenttransfer>
+<fefuncr tablevalues="0 .18 .92 .38 1 .72 1" type="table"></fefuncr>
+<fefuncg tablevalues=".08 .72 .22 1 .42 .9 .75" type="table"></fefuncg>
+<fefuncb tablevalues=".22 1 .3 .76 .12 .95 .58" type="table"></fefuncb>
+</fecomponenttransfer>
+<fecolormatrix type="saturate" values="1.45"></fecolormatrix>
+</filter>
+<filter color-interpolation-filters="sRGB" id="curve-solar">
+<fecomponenttransfer>
+<fefuncr tablevalues=".08 .95 .28 1 .5 .82 .98" type="table"></fefuncr>
+<fefuncg tablevalues=".12 .3 1 .35 .82 .22 .92" type="table"></fefuncg>
+<fefuncb tablevalues=".65 .18 .98 .28 1 .44 .88" type="table"></fefuncb>
+</fecomponenttransfer>
+<fecolormatrix type="saturate" values="1.65"></fecolormatrix>
+</filter>
+<filter color-interpolation-filters="sRGB" id="curve-crushed">
+<fecomponenttransfer>
+<fefuncr tablevalues=".02 .08 .9 .25 1 .62" type="discrete"></fefuncr>
+<fefuncg tablevalues=".01 .7 .16 .96 .34 .88" type="discrete"></fefuncg>
+<fefuncb tablevalues=".18 .92 .08 .72 1 .4" type="discrete"></fefuncb>
+</fecomponenttransfer>
+<fecolormatrix type="saturate" values="1.8"></fecolormatrix>
+</filter>
+<filter color-interpolation-filters="sRGB" id="curve-inverted-midtones">
+<fecomponenttransfer>
+<fefuncr tablevalues=".05 .35 .96 .18 .78 1 .7" type="table"></fefuncr>
+<fefuncg tablevalues=".2 .92 .28 .72 .12 1 .62" type="table"></fefuncg>
+<fefuncb tablevalues=".1 .82 .4 1 .2 .76 .96" type="table"></fefuncb>
+</fecomponenttransfer>
+<fecolormatrix type="saturate" values="1.55"></fecolormatrix>
+</filter>
+</defs>
+</svg>
+<header>
+<h1>Danny O'Shaughnessy</h1>
+<p>
+            Concert Photographer<br/>
+            New York City
+        </p>
+</header>
+<main>
+<section class="hero-pair">
+<div class="psy-frame psy-frame-1 pattern-rings"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/photo-1.jpg"/></div>
+<div class="psy-frame psy-frame-2 pattern-waves"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/photo-2.jpg"/></div>
+</section>
+<section class="gallery-row">
+<div class="psy-frame psy-frame-1 pattern-prisms"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-crushed" src="images/photo-3.jpg"/></div>
+<div class="psy-frame psy-frame-2 pattern-kaleidoscope"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-inverted-midtones" src="images/photo-4.jpg"/></div>
+<div class="psy-frame psy-frame-3 pattern-spiral"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-solar" src="images/photo-5.jpg"/></div>
+<div class="psy-frame psy-frame-4 pattern-blobs"><img alt="Concert photograph by Danny O'Shaughnessy" class="curve-acid" src="images/photo-6.jpg"/></div>
+</section>
+<section class="contact">
+<h2>Contact</h2>
+<p>
+        Instagram:
+        <a href="https://instagram.com/dannyoshag" rel="noopener noreferrer" target="_blank">
+            @dannyoshag
+        </a>
+</p>
+<p>
+        Email:
+        <a href="mailto:danny@dannyoshag.com">
+            danny@dannyoshag.com
+        </a>
+</p>
+</section>
+</main>
+<script src="psychedelic.js"></script>
+</body>
+</html>

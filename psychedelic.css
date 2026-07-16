@@ -1,0 +1,1420 @@
+
+/*
+    Psychedelic mode v8 — Color Chaos
+    ----------------------------------
+    Goal: lots of color, simple automatic movement, low mobile cost.
+
+    Performance strategy:
+    - One low-resolution canvas background, capped around 24 fps
+    - No giant blur filters
+    - No mouse or hover interaction
+    - Foreground photo effects use lightweight gradient overlays
+    - Every photo has different durations and delays
+*/
+
+html {
+    background: #050008;
+}
+
+body.psychedelic-mode {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    background: transparent;
+}
+
+#color-field {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -20;
+    pointer-events: none;
+}
+
+.psychedelic-mode::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -15;
+    pointer-events: none;
+    opacity: 0.44;
+    background:
+        radial-gradient(circle at 18% 22%, rgba(255, 0, 170, .62), transparent 38%),
+        radial-gradient(circle at 78% 28%, rgba(0, 225, 255, .54), transparent 40%),
+        radial-gradient(circle at 50% 82%, rgba(173, 255, 0, .34), transparent 46%);
+    mix-blend-mode: screen;
+    animation: page-color-breathe 12s ease-in-out infinite alternate;
+}
+
+.psychedelic-mode::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    opacity: .08;
+    background:
+        linear-gradient(rgba(255,255,255,.06) 50%, transparent 50%);
+    background-size: 100% 4px;
+}
+
+.psychedelic-mode > header,
+.psychedelic-mode > main,
+.psychedelic-mode > .psy-badge {
+    position: relative;
+    z-index: 5;
+}
+
+.psychedelic-mode header,
+.psychedelic-mode .contact {
+    text-shadow:
+        0 2px 14px rgba(0,0,0,.88),
+        0 0 20px rgba(255,0,190,.16);
+}
+
+.psychedelic-mode header h1 {
+    color: white;
+    text-shadow:
+        3px 0 0 rgba(0,225,255,.40),
+        -3px 0 0 rgba(255,0,190,.40),
+        0 2px 16px rgba(0,0,0,.82);
+}
+
+.psy-frame {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    width: 100%;
+    line-height: 0;
+    background: #09000f;
+}
+
+.psy-frame img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(118%) contrast(106%);
+}
+
+/* Main color wash over each photograph. */
+.psy-frame::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: 2;
+    pointer-events: none;
+    opacity: var(--wash-opacity, .62);
+    mix-blend-mode: color;
+    background:
+        linear-gradient(
+            var(--wash-angle, 45deg),
+            #ff0099 0%,
+            #7b2cff 22%,
+            #00d9ff 45%,
+            #b7ff00 68%,
+            #ff7a00 84%,
+            #ff0099 100%
+        );
+    background-size: 320% 320%;
+    animation:
+        color-wash var(--wash-time, 11s) linear infinite,
+        wash-pulse var(--pulse-time, 7s) ease-in-out infinite alternate;
+    animation-delay:
+        var(--wash-delay, 0s),
+        var(--pulse-delay, 0s);
+}
+
+/* Moving X / quadrant effect. */
+.psy-frame::after {
+    content: "";
+    position: absolute;
+    inset: -35%;
+    z-index: 3;
+    pointer-events: none;
+    opacity: var(--x-opacity, .44);
+    mix-blend-mode: screen;
+    background:
+        linear-gradient(
+            45deg,
+            rgba(255,0,180,.85) 0 16%,
+            transparent 16% 40%,
+            rgba(0,225,255,.74) 40% 57%,
+            transparent 57% 82%,
+            rgba(190,255,0,.65) 82% 100%
+        ),
+        linear-gradient(
+            -45deg,
+            rgba(115,30,255,.72) 0 15%,
+            transparent 15% 42%,
+            rgba(255,125,0,.68) 42% 59%,
+            transparent 59% 84%,
+            rgba(0,230,255,.64) 84% 100%
+        );
+    background-size: 210% 210%;
+    animation:
+        x-chaos var(--x-time, 17s) linear infinite,
+        x-turn var(--turn-time, 29s) ease-in-out infinite alternate;
+    animation-delay:
+        var(--x-delay, 0s),
+        var(--turn-delay, 0s);
+}
+
+/* Intentionally mismatched timings. */
+.hero-pair .psy-frame:nth-child(1) {
+    --wash-time: 9.5s;
+    --pulse-time: 6.3s;
+    --x-time: 16s;
+    --turn-time: 31s;
+    --wash-delay: -2s;
+    --pulse-delay: -4s;
+    --x-delay: -7s;
+    --turn-delay: -9s;
+    --wash-angle: 28deg;
+    --wash-opacity: .57;
+    --x-opacity: .40;
+}
+
+.hero-pair .psy-frame:nth-child(2) {
+    --wash-time: 14.2s;
+    --pulse-time: 8.9s;
+    --x-time: 21s;
+    --turn-time: 24s;
+    --wash-delay: -10s;
+    --pulse-delay: -1s;
+    --x-delay: -3s;
+    --turn-delay: -14s;
+    --wash-angle: 118deg;
+    --wash-opacity: .65;
+    --x-opacity: .50;
+}
+
+.gallery-row .psy-frame:nth-child(1) {
+    --wash-time: 7.7s;
+    --pulse-time: 10.2s;
+    --x-time: 13.6s;
+    --turn-time: 33s;
+    --wash-delay: -4s;
+    --pulse-delay: -8s;
+    --x-delay: -9s;
+    --turn-delay: -2s;
+    --wash-angle: 72deg;
+    --wash-opacity: .54;
+    --x-opacity: .38;
+}
+
+.gallery-row .psy-frame:nth-child(2) {
+    --wash-time: 18.4s;
+    --pulse-time: 5.8s;
+    --x-time: 25s;
+    --turn-time: 19s;
+    --wash-delay: -13s;
+    --pulse-delay: -3s;
+    --x-delay: -16s;
+    --turn-delay: -7s;
+    --wash-angle: 162deg;
+    --wash-opacity: .68;
+    --x-opacity: .48;
+}
+
+.gallery-row .psy-frame:nth-child(3) {
+    --wash-time: 11.3s;
+    --pulse-time: 12.6s;
+    --x-time: 18.8s;
+    --turn-time: 37s;
+    --wash-delay: -1s;
+    --pulse-delay: -11s;
+    --x-delay: -5s;
+    --turn-delay: -20s;
+    --wash-angle: 206deg;
+    --wash-opacity: .60;
+    --x-opacity: .43;
+}
+
+.gallery-row .psy-frame:nth-child(4) {
+    --wash-time: 15.8s;
+    --pulse-time: 7.4s;
+    --x-time: 29s;
+    --turn-time: 23s;
+    --wash-delay: -8s;
+    --pulse-delay: -5s;
+    --x-delay: -21s;
+    --turn-delay: -4s;
+    --wash-angle: 315deg;
+    --wash-opacity: .64;
+    --x-opacity: .46;
+}
+
+.psy-badge {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 9999;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    border-radius: 999px;
+    background: rgba(11, 5, 20, 0.78);
+    color: #ffffff;
+    font: 700 12px/1 Arial, sans-serif;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+}
+
+@keyframes page-color-breathe {
+    0% {
+        opacity: .28;
+        transform: scale(1);
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        opacity: .62;
+        transform: scale(1.12);
+        filter: hue-rotate(95deg);
+    }
+}
+
+@keyframes color-wash {
+    0% {
+        background-position: 0% 20%;
+        transform: scale(1.04);
+    }
+    100% {
+        background-position: 300% 80%;
+        transform: scale(1.12);
+    }
+}
+
+@keyframes wash-pulse {
+    0% {
+        opacity: calc(var(--wash-opacity, .62) * .62);
+    }
+    100% {
+        opacity: var(--wash-opacity, .62);
+    }
+}
+
+@keyframes x-chaos {
+    0% {
+        background-position: 0% 0%, 100% 0%;
+    }
+    100% {
+        background-position: 210% 190%, -120% 180%;
+    }
+}
+
+@keyframes x-turn {
+    0% {
+        transform: rotate(-8deg) scale(1.06);
+    }
+    100% {
+        transform: rotate(18deg) scale(1.22);
+    }
+}
+
+@media (max-width: 800px) {
+    .psy-frame::before {
+        opacity: calc(var(--wash-opacity, .62) * .90);
+    }
+
+    .psy-frame::after {
+        opacity: calc(var(--x-opacity, .44) * .88);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #color-field {
+        display: none;
+    }
+
+    .psychedelic-mode::before,
+    .psy-frame::before,
+    .psy-frame::after {
+        animation: none !important;
+    }
+}
+
+
+/*
+    v9 — Wonky non-monotonic color curves
+    --------------------------------------
+    These are real per-channel transfer curves implemented as SVG filters.
+    Each channel intentionally rises, dips, and rises again, similar in spirit
+    to drawing a non-monotonic curve in a photo editor.
+
+    The filters are static to keep mobile performance reasonable.
+    Existing automatic overlays and background movement continue independently.
+*/
+
+.psychedelic-mode img.curve-acid {
+    filter: url("#curve-acid");
+}
+
+.psychedelic-mode img.curve-solar {
+    filter: url("#curve-solar");
+}
+
+.psychedelic-mode img.curve-crushed {
+    filter: url("#curve-crushed");
+}
+
+.psychedelic-mode img.curve-inverted-midtones {
+    filter: url("#curve-inverted-midtones");
+}
+
+/* Push the moving color layers harder without adding new compositing layers. */
+.psy-frame::before {
+    opacity: min(0.88, calc(var(--wash-opacity, .62) + .16));
+    mix-blend-mode: hard-light;
+    background:
+        linear-gradient(
+            var(--wash-angle, 45deg),
+            #ff00bb 0%,
+            #6a00ff 14%,
+            #00eaff 31%,
+            #00ff6a 48%,
+            #eaff00 64%,
+            #ff6a00 80%,
+            #ff0055 100%
+        );
+    background-size: 360% 360%;
+}
+
+.psy-frame::after {
+    opacity: min(0.78, calc(var(--x-opacity, .44) + .18));
+    mix-blend-mode: difference;
+    background:
+        linear-gradient(
+            45deg,
+            rgba(255,0,190,.98) 0 14%,
+            transparent 14% 33%,
+            rgba(0,255,255,.92) 33% 52%,
+            transparent 52% 72%,
+            rgba(205,255,0,.88) 72% 100%
+        ),
+        linear-gradient(
+            -45deg,
+            rgba(115,0,255,.96) 0 13%,
+            transparent 13% 35%,
+            rgba(255,115,0,.90) 35% 57%,
+            transparent 57% 78%,
+            rgba(0,255,180,.84) 78% 100%
+        );
+}
+
+/* Faster but still mismatched automatic cycles. */
+.hero-pair .psy-frame:nth-child(1) {
+    --wash-time: 6.8s;
+    --pulse-time: 4.7s;
+    --x-time: 10.2s;
+    --turn-time: 18s;
+}
+
+.hero-pair .psy-frame:nth-child(2) {
+    --wash-time: 9.6s;
+    --pulse-time: 6.1s;
+    --x-time: 14.4s;
+    --turn-time: 21s;
+}
+
+.gallery-row .psy-frame:nth-child(1) {
+    --wash-time: 5.9s;
+    --pulse-time: 7.3s;
+    --x-time: 8.8s;
+    --turn-time: 24s;
+}
+
+.gallery-row .psy-frame:nth-child(2) {
+    --wash-time: 12.8s;
+    --pulse-time: 4.2s;
+    --x-time: 16.6s;
+    --turn-time: 15s;
+}
+
+.gallery-row .psy-frame:nth-child(3) {
+    --wash-time: 8.1s;
+    --pulse-time: 9.4s;
+    --x-time: 12.1s;
+    --turn-time: 27s;
+}
+
+.gallery-row .psy-frame:nth-child(4) {
+    --wash-time: 10.7s;
+    --pulse-time: 5.3s;
+    --x-time: 18.2s;
+    --turn-time: 17s;
+}
+
+/* Slightly quicker global color field. */
+.psychedelic-mode::before {
+    animation-duration: 8.5s;
+}
+
+@media (max-width: 800px) {
+    /*
+        Keep the SVG curves, but slightly lower overlay strength in small
+        in-app browsers to reduce muddy clipping.
+    */
+    .psy-frame::before {
+        opacity: min(0.78, calc(var(--wash-opacity, .62) + .10));
+    }
+
+    .psy-frame::after {
+        opacity: min(0.68, calc(var(--x-opacity, .44) + .12));
+    }
+}
+
+
+/*
+    v10 — Warped photo backgrounds + unique per-image motion
+    ---------------------------------------------------------
+    Performance goals:
+    - Remove canvas dependency from the visual experience
+    - Reuse existing images as CSS backgrounds
+    - Animate transforms and opacity only
+    - Keep all motion automatic
+*/
+
+/* Hide the old canvas background; the warped photo layers replace it. */
+#color-field {
+    display: none;
+}
+
+/* Tone down the old generic background wash. */
+.psychedelic-mode::before {
+    opacity: .16;
+    animation-duration: 18s;
+}
+
+/* Warped photo texture background */
+.photo-backgrounds {
+    position: fixed;
+    inset: 0;
+    z-index: -20;
+    overflow: hidden;
+    pointer-events: none;
+    background: #050008;
+}
+
+.photo-bg {
+    position: absolute;
+    width: 72vmax;
+    aspect-ratio: 4 / 5;
+    background-size: cover;
+    background-position: center;
+    opacity: .17;
+    mix-blend-mode: screen;
+    filter: saturate(210%) contrast(115%) hue-rotate(var(--bg-hue, 0deg));
+    transform-origin: center;
+    will-change: transform, opacity, filter;
+}
+
+.photo-bg-1 {
+    left: -27vmax;
+    top: -14vmax;
+    background-image: url("images/photo-1.jpg");
+    animation:
+        bg-drift-1 34s ease-in-out infinite alternate,
+        bg-hue-1 21s linear infinite,
+        bg-pulse-1 11s ease-in-out infinite;
+}
+
+.photo-bg-2 {
+    right: -30vmax;
+    top: -5vmax;
+    background-image: url("images/photo-2.jpg");
+    opacity: .12;
+    animation:
+        bg-drift-2 41s ease-in-out infinite alternate-reverse,
+        bg-hue-2 29s linear infinite reverse,
+        bg-pulse-2 14s ease-in-out infinite;
+    animation-delay: -9s, -5s, -2s;
+}
+
+.photo-bg-3 {
+    left: 12vw;
+    top: 32vh;
+    background-image: url("images/photo-3.jpg");
+    width: 58vmax;
+    opacity: .15;
+    animation:
+        bg-drift-3 37s ease-in-out infinite alternate,
+        bg-hue-3 25s linear infinite,
+        bg-pulse-3 17s ease-in-out infinite;
+    animation-delay: -13s, -11s, -6s;
+}
+
+.photo-bg-4 {
+    right: -18vmax;
+    top: 40vh;
+    background-image: url("images/photo-4.jpg");
+    width: 62vmax;
+    opacity: .14;
+    animation:
+        bg-drift-4 46s ease-in-out infinite alternate-reverse,
+        bg-hue-4 31s linear infinite reverse,
+        bg-pulse-4 12s ease-in-out infinite;
+    animation-delay: -17s, -7s, -9s;
+}
+
+.photo-bg-5 {
+    left: -18vmax;
+    bottom: -34vmax;
+    background-image: url("images/photo-5.jpg");
+    width: 64vmax;
+    opacity: .16;
+    animation:
+        bg-drift-5 43s ease-in-out infinite alternate,
+        bg-hue-5 27s linear infinite,
+        bg-pulse-5 19s ease-in-out infinite;
+    animation-delay: -21s, -16s, -4s;
+}
+
+.photo-bg-6 {
+    right: 8vw;
+    bottom: -28vmax;
+    background-image: url("images/photo-6.jpg");
+    width: 54vmax;
+    opacity: .13;
+    animation:
+        bg-drift-6 39s ease-in-out infinite alternate-reverse,
+        bg-hue-6 23s linear infinite reverse,
+        bg-pulse-6 15s ease-in-out infinite;
+    animation-delay: -5s, -19s, -12s;
+}
+
+/* RGB bleed using lightweight drop-shadows, different per image. */
+.psy-frame img {
+    transition: none;
+}
+
+.pattern-rings img {
+    filter: url("#curve-acid") drop-shadow(10px 0 0 rgba(0, 235, 255, .28))
+            drop-shadow(-10px 0 0 rgba(255, 0, 190, .24));
+}
+
+.pattern-waves img {
+    filter: url("#curve-solar") drop-shadow(6px 0 0 rgba(0, 235, 255, .18))
+            drop-shadow(-6px 0 0 rgba(255, 0, 190, .16));
+}
+
+.pattern-prisms img {
+    filter: url("#curve-crushed") drop-shadow(12px 0 0 rgba(255, 0, 190, .28))
+            drop-shadow(-8px 0 0 rgba(180, 255, 0, .20));
+}
+
+.pattern-kaleidoscope img {
+    filter: url("#curve-inverted-midtones") drop-shadow(8px 0 0 rgba(0, 255, 220, .24))
+            drop-shadow(-12px 0 0 rgba(255, 120, 0, .24));
+}
+
+.pattern-spiral img {
+    filter: url("#curve-solar") drop-shadow(9px 0 0 rgba(120, 0, 255, .25))
+            drop-shadow(-9px 0 0 rgba(0, 240, 255, .22));
+}
+
+.pattern-blobs img {
+    filter: url("#curve-acid") drop-shadow(10px 0 0 rgba(255, 0, 110, .24))
+            drop-shadow(-10px 0 0 rgba(180, 255, 0, .20));
+}
+
+/* Image 2 toned down so the subject remains readable. */
+.pattern-waves::before {
+    opacity: .42 !important;
+    mix-blend-mode: color !important;
+}
+
+.pattern-waves::after {
+    opacity: .25 !important;
+    mix-blend-mode: screen !important;
+}
+
+.pattern-waves img {
+    opacity: .98;
+}
+
+/* Distinct overlay personalities */
+.pattern-rings::after {
+    inset: -20%;
+    opacity: .48;
+    mix-blend-mode: screen;
+    background:
+        repeating-radial-gradient(
+            circle at 50% 50%,
+            rgba(255,0,190,.78) 0 3%,
+            transparent 3% 8%,
+            rgba(0,235,255,.62) 8% 11%,
+            transparent 11% 17%
+        );
+    animation:
+        rings-spin 18s linear infinite,
+        rings-pulse 7s ease-in-out infinite alternate;
+}
+
+.pattern-waves::after {
+    inset: -20%;
+    background:
+        repeating-linear-gradient(
+            18deg,
+            rgba(0,235,255,.42) 0 5%,
+            transparent 5% 11%,
+            rgba(255,0,190,.34) 11% 16%,
+            transparent 16% 23%
+        );
+    animation:
+        waves-slide 14s linear infinite,
+        waves-shear 9s ease-in-out infinite alternate;
+}
+
+.pattern-prisms::after {
+    inset: -28%;
+    opacity: .50;
+    mix-blend-mode: difference;
+    background:
+        conic-gradient(
+            from 0deg,
+            rgba(255,0,190,.88),
+            rgba(0,235,255,.78),
+            rgba(190,255,0,.72),
+            rgba(255,120,0,.78),
+            rgba(120,0,255,.82),
+            rgba(255,0,190,.88)
+        );
+    animation:
+        prism-spin 22s linear infinite reverse,
+        prism-scale 8s ease-in-out infinite alternate;
+}
+
+.pattern-kaleidoscope::after {
+    inset: -34%;
+    opacity: .44;
+    mix-blend-mode: hard-light;
+    background:
+        repeating-conic-gradient(
+            from 12deg,
+            rgba(255,0,190,.74) 0 12deg,
+            transparent 12deg 28deg,
+            rgba(0,235,255,.66) 28deg 40deg,
+            transparent 40deg 58deg
+        );
+    animation:
+        kaleido-spin 28s linear infinite,
+        kaleido-breathe 10s ease-in-out infinite alternate;
+}
+
+.pattern-spiral::after {
+    inset: -30%;
+    opacity: .43;
+    mix-blend-mode: screen;
+    background:
+        repeating-radial-gradient(
+            ellipse at center,
+            rgba(120,0,255,.70) 0 4%,
+            transparent 4% 9%,
+            rgba(0,235,255,.60) 9% 13%,
+            transparent 13% 20%
+        );
+    animation:
+        spiral-warp 19s ease-in-out infinite alternate,
+        spiral-spin 25s linear infinite;
+}
+
+.pattern-blobs::after {
+    inset: -20%;
+    opacity: .46;
+    mix-blend-mode: color-dodge;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255,0,190,.82), transparent 28%),
+        radial-gradient(circle at 72% 22%, rgba(0,235,255,.76), transparent 31%),
+        radial-gradient(circle at 52% 78%, rgba(190,255,0,.68), transparent 30%),
+        radial-gradient(circle at 85% 70%, rgba(255,120,0,.68), transparent 29%);
+    animation:
+        blobs-wander 17s ease-in-out infinite alternate,
+        blobs-color 13s linear infinite;
+}
+
+/* Background warp motion */
+@keyframes bg-drift-1 {
+    0%   { transform: translate3d(-6vw,-4vh,0) rotate(-18deg) scaleX(1.5) scaleY(.72); }
+    100% { transform: translate3d(35vw,28vh,0) rotate(21deg) scaleX(.78) scaleY(1.48); }
+}
+@keyframes bg-drift-2 {
+    0%   { transform: translate3d(8vw,-6vh,0) rotate(16deg) scaleX(.82) scaleY(1.55); }
+    100% { transform: translate3d(-38vw,36vh,0) rotate(-24deg) scaleX(1.62) scaleY(.66); }
+}
+@keyframes bg-drift-3 {
+    0%   { transform: translate3d(-12vw,2vh,0) rotate(-10deg) scaleX(1.3) scaleY(.86); }
+    100% { transform: translate3d(27vw,-22vh,0) rotate(28deg) scaleX(.75) scaleY(1.42); }
+}
+@keyframes bg-drift-4 {
+    0%   { transform: translate3d(10vw,8vh,0) rotate(22deg) scaleX(.72) scaleY(1.55); }
+    100% { transform: translate3d(-33vw,-30vh,0) rotate(-32deg) scaleX(1.48) scaleY(.78); }
+}
+@keyframes bg-drift-5 {
+    0%   { transform: translate3d(-8vw,12vh,0) rotate(-26deg) scaleX(1.58) scaleY(.70); }
+    100% { transform: translate3d(31vw,-34vh,0) rotate(18deg) scaleX(.82) scaleY(1.40); }
+}
+@keyframes bg-drift-6 {
+    0%   { transform: translate3d(9vw,6vh,0) rotate(14deg) scaleX(.78) scaleY(1.50); }
+    100% { transform: translate3d(-29vw,-25vh,0) rotate(-20deg) scaleX(1.45) scaleY(.80); }
+}
+
+@keyframes bg-hue-1 { to { --bg-hue: 360deg; } }
+@keyframes bg-hue-2 { to { --bg-hue: -360deg; } }
+@keyframes bg-hue-3 { to { --bg-hue: 300deg; } }
+@keyframes bg-hue-4 { to { --bg-hue: -300deg; } }
+@keyframes bg-hue-5 { to { --bg-hue: 420deg; } }
+@keyframes bg-hue-6 { to { --bg-hue: -420deg; } }
+
+@keyframes bg-pulse-1 { 0%,100%{opacity:.10} 50%{opacity:.22} }
+@keyframes bg-pulse-2 { 0%,100%{opacity:.07} 50%{opacity:.17} }
+@keyframes bg-pulse-3 { 0%,100%{opacity:.08} 50%{opacity:.19} }
+@keyframes bg-pulse-4 { 0%,100%{opacity:.07} 50%{opacity:.18} }
+@keyframes bg-pulse-5 { 0%,100%{opacity:.09} 50%{opacity:.20} }
+@keyframes bg-pulse-6 { 0%,100%{opacity:.06} 50%{opacity:.16} }
+
+/* Foreground pattern motion */
+@keyframes rings-spin {
+    to { transform: rotate(360deg) scale(1.12); }
+}
+@keyframes rings-pulse {
+    0%{opacity:.28} 100%{opacity:.58}
+}
+
+@keyframes waves-slide {
+    to { background-position: 160px 100px; }
+}
+@keyframes waves-shear {
+    0%{transform: skewX(-8deg) rotate(-3deg) scale(1.05)}
+    100%{transform: skewX(12deg) rotate(5deg) scale(1.18)}
+}
+
+@keyframes prism-spin {
+    to { transform: rotate(360deg) scale(1.18); }
+}
+@keyframes prism-scale {
+    0%{opacity:.30} 100%{opacity:.58}
+}
+
+@keyframes kaleido-spin {
+    to { transform: rotate(360deg) scale(1.14); }
+}
+@keyframes kaleido-breathe {
+    0%{opacity:.26} 100%{opacity:.52}
+}
+
+@keyframes spiral-warp {
+    0%{transform: scaleX(1.05) scaleY(.90) rotate(-8deg)}
+    100%{transform: scaleX(.88) scaleY(1.18) rotate(12deg)}
+}
+@keyframes spiral-spin {
+    to { background-position: 120px -90px; }
+}
+
+@keyframes blobs-wander {
+    0%{transform: translate(-7%,-5%) scale(1.03) rotate(-5deg)}
+    100%{transform: translate(8%,7%) scale(1.18) rotate(8deg)}
+}
+@keyframes blobs-color {
+    to { filter: hue-rotate(360deg); }
+}
+
+@media (max-width: 800px) {
+    .photo-bg {
+        width: 90vmax;
+        opacity: .11;
+    }
+
+    .photo-bg-2 {
+        opacity: .08;
+    }
+
+    .pattern-rings::after,
+    .pattern-waves::after,
+    .pattern-prisms::after,
+    .pattern-kaleidoscope::after,
+    .pattern-spiral::after,
+    .pattern-blobs::after {
+        animation-duration: 1.2em;
+    }
+}
+
+/* v11 tweaks */
+
+/* Soften rotating wedge families on 1,4,5 */
+.pattern-rings::after{
+ opacity:.22!important;
+ mix-blend-mode:soft-light!important;
+ animation-duration:30s,12s!important;
+ filter:blur(1px);
+}
+.pattern-kaleidoscope::after{
+ opacity:.18!important;
+ mix-blend-mode:overlay!important;
+ animation-duration:38s,14s!important;
+ filter:blur(1.5px);
+}
+.pattern-spiral::after{
+ opacity:.20!important;
+ mix-blend-mode:soft-light!important;
+ animation-duration:32s,12s!important;
+ filter:blur(1px);
+}
+
+/* Image 2: let original breathe */
+.pattern-waves::before{
+ opacity:.24!important;
+ animation:color-wash 6s linear infinite,wash-pulse-soft 5.5s ease-in-out infinite alternate!important;
+}
+.pattern-waves::after{
+ opacity:.12!important;
+ animation:waves-slide 18s linear infinite,waves-shear 12s ease-in-out infinite alternate!important;
+}
+.pattern-waves img{
+ filter:url("#curve-solar") saturate(1.08) contrast(1.02)!important;
+}
+
+@keyframes wash-pulse-soft{
+ 0%{opacity:.08}
+ 40%{opacity:.28}
+ 70%{opacity:.12}
+ 100%{opacity:.24}
+}
+
+/* Faster background drift */
+.photo-bg-1{animation-duration:22s,15s,7s!important;}
+.photo-bg-2{animation-duration:25s,18s,8s!important;}
+.photo-bg-3{animation-duration:24s,16s,9s!important;}
+.photo-bg-4{animation-duration:28s,20s,8s!important;}
+.photo-bg-5{animation-duration:26s,17s,10s!important;}
+.photo-bg-6{animation-duration:23s,15s,8s!important;}
+
+
+/* ===== Version 12 ===== */
+
+/* Image 3 bullseye gets organic modulation instead of static rings */
+.pattern-prisms::after{
+ animation:
+   prism-spin 18s linear infinite reverse,
+   prism-scale 7s ease-in-out infinite alternate,
+   bullseye-breathe 5.4s ease-in-out infinite,
+   bullseye-wobble 11s ease-in-out infinite;
+ filter:blur(.7px);
+}
+
+@keyframes bullseye-breathe{
+ 0%,100%{opacity:.20;transform:scale(.96);}
+ 35%{opacity:.48;transform:scale(1.04);}
+ 70%{opacity:.28;transform:scale(1.12);}
+}
+
+@keyframes bullseye-wobble{
+ 0%{border-radius:48% 52% 50% 50%/49% 51% 49% 51%;}
+ 50%{border-radius:58% 42% 46% 54%/43% 57% 55% 45%;}
+ 100%{border-radius:48% 52% 50% 50%/49% 51% 49% 51%;}
+}
+
+/* Blanket VHS chroma separation */
+.psychedelic-mode{
+ position:relative;
+}
+
+.psychedelic-mode::before{
+ opacity:.22!important;
+}
+
+.psychedelic-mode::after{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:200;
+ opacity:.38;
+ mix-blend-mode:screen;
+ background:
+ linear-gradient(rgba(255,255,255,.045) 50%,transparent 50%),
+ linear-gradient(90deg,
+ rgba(255,0,70,.08),
+ transparent 12%,
+ rgba(0,255,255,.08) 78%,
+ transparent);
+ background-size:100% 3px,100% 100%;
+ animation:
+   vhsScan 5s linear infinite,
+   vhsRoll 9s ease-in-out infinite,
+   vhsNoise 0.22s steps(2,end) infinite;
+}
+
+.hero-pair img,
+.gallery-row img{
+ position:relative;
+}
+
+.hero-pair img{
+ animation:
+  rgbSplitA 2.7s ease-in-out infinite alternate;
+}
+.gallery-row img:nth-child(1){animation:rgbSplitB 3.3s ease-in-out infinite alternate;}
+.gallery-row img:nth-child(2){animation:rgbSplitC 2.2s ease-in-out infinite alternate;}
+.gallery-row img:nth-child(3){animation:rgbSplitD 4.1s ease-in-out infinite alternate;}
+.gallery-row img:nth-child(4){animation:rgbSplitE 2.9s ease-in-out infinite alternate;}
+
+@keyframes rgbSplitA{
+0%,100%{filter:url("#curve-acid") drop-shadow(-1px 0 rgba(255,0,80,.55)) drop-shadow(1px 0 rgba(0,255,255,.55));}
+50%{filter:url("#curve-acid") drop-shadow(-3px 0 rgba(255,0,80,.75)) drop-shadow(3px 0 rgba(0,255,255,.75));}
+}
+@keyframes rgbSplitB{
+0%,100%{transform:translateX(0)}
+50%{transform:translateX(.8px)}
+}
+@keyframes rgbSplitC{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-.8px)}
+}
+@keyframes rgbSplitD{
+0%,100%{transform:translate(.3px,-.3px)}
+50%{transform:translate(-.8px,.7px)}
+}
+@keyframes rgbSplitE{
+0%,100%{transform:translate(0)}
+50%{transform:translate(.6px,.5px)}
+}
+
+@keyframes vhsScan{
+from{background-position:0 0,0 0;}
+to{background-position:0 3px,0 0;}
+}
+@keyframes vhsRoll{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(2px);}
+}
+@keyframes vhsNoise{
+0%{opacity:.28;}
+50%{opacity:.40;}
+100%{opacity:.32;}
+}
+
+/* Faster background */
+.photo-bg{
+ animation-duration:16s,11s,6s!important;
+}
+
+
+/* ========= Version 13 ========= */
+
+/* Global analog VHS blanket */
+.psychedelic-mode::after{
+    opacity:.48 !important;
+    background-size:100% 2px,100% 100%;
+    animation:
+        vhsScan 3s linear infinite,
+        vhsRoll 6s ease-in-out infinite,
+        vhsNoise .12s steps(2,end) infinite,
+        tapeWarp 9s ease-in-out infinite;
+}
+
+/* Meltier horizontal tape warping */
+@keyframes tapeWarp{
+ 0%,100%{transform:translateX(0) skewX(0deg);}
+ 18%{transform:translateX(1px) skewX(.2deg);}
+ 51%{transform:translateX(-2px) skewX(-.25deg);}
+ 76%{transform:translateX(1.5px) skewX(.18deg);}
+}
+
+/* Chroma trails */
+.hero-pair img,
+.gallery-row img{
+    animation:
+      chromaTrail 2.8s ease-in-out infinite alternate,
+      highlightBloom 7.5s ease-in-out infinite,
+      lineTear 10s steps(1,end) infinite;
+}
+
+@keyframes chromaTrail{
+ 0%,100%{
+   filter:
+     saturate(1.2)
+     drop-shadow(-1px 0 rgba(255,40,120,.55))
+     drop-shadow(1px 0 rgba(0,255,255,.55));
+ }
+ 50%{
+   filter:
+     saturate(1.35)
+     drop-shadow(-5px 0 rgba(255,40,120,.70))
+     drop-shadow(5px 0 rgba(0,255,255,.70));
+ }
+}
+
+/* Occasional blooming around highlights */
+@keyframes highlightBloom{
+ 0%,82%,100%{
+   opacity:1;
+ }
+ 86%{
+   filter:
+     brightness(1.18)
+     contrast(1.06)
+     saturate(1.35)
+     drop-shadow(0 0 8px rgba(255,220,120,.35));
+ }
+ 92%{
+   filter:
+     brightness(1.26)
+     contrast(1.08)
+     saturate(1.45)
+     drop-shadow(0 0 14px rgba(255,200,80,.45));
+ }
+}
+
+/* Tiny analog line tear */
+@keyframes lineTear{
+ 0%,94%,100%{
+   transform:translateX(0);
+ }
+ 95%{
+   transform:translateX(2px);
+ }
+ 96%{
+   transform:translateX(-3px);
+ }
+ 97%{
+   transform:translateX(1px);
+ }
+}
+
+/* Slightly livelier warped background */
+.photo-bg{
+ animation-duration:12s,8s,5s !important;
+}
+
+
+/* ===== Version 14 ===== */
+
+/* Remove target circles from image 1 entirely */
+.pattern-rings::after{
+    content:none !important;
+}
+
+/* Stronger visible VHS blanket */
+.psychedelic-mode::after{
+    opacity:.62 !important;
+    mix-blend-mode:screen;
+    background:
+      linear-gradient(rgba(255,255,255,.06) 50%,transparent 50%),
+      repeating-linear-gradient(
+          90deg,
+          rgba(255,0,80,.10) 0 2px,
+          transparent 2px 7px,
+          rgba(0,255,255,.10) 7px 9px,
+          transparent 9px 14px);
+    background-size:100% 2px,100% 100%;
+    animation:
+      vhsScan 1.8s linear infinite,
+      vhsRoll 3.5s ease-in-out infinite,
+      tapeWarp 5s ease-in-out infinite,
+      vhsNoise .08s steps(2,end) infinite;
+}
+
+/* Much more obvious chroma separation */
+.hero-pair img,
+.gallery-row img{
+    animation:
+      chromaSplit14 1.9s ease-in-out infinite alternate,
+      highlightBloom 7s ease-in-out infinite,
+      lineTear14 6s steps(1,end) infinite !important;
+}
+
+@keyframes chromaSplit14{
+ 0%,100%{
+   filter:
+      saturate(1.25)
+      drop-shadow(-2px 0 rgba(255,0,90,.75))
+      drop-shadow(2px 0 rgba(0,255,255,.75));
+ }
+ 50%{
+   filter:
+      saturate(1.45)
+      drop-shadow(-6px 0 rgba(255,0,90,.92))
+      drop-shadow(6px 0 rgba(0,255,255,.92));
+ }
+}
+
+/* Make tearing actually noticeable */
+@keyframes lineTear14{
+ 0%,90%,100%{transform:translateX(0);}
+ 91%{transform:translateX(4px);}
+ 92%{transform:translateX(-6px);}
+ 93%{transform:translateX(3px);}
+ 94%{transform:translateX(-2px);}
+}
+
+/* Faster background motion */
+.photo-bg{
+    animation-duration:9s,6s,4s !important;
+}
+
+
+/* ===== Version 15: warm + warbly ===== */
+
+/*
+Remove the VHS blanket entirely.
+This suppresses the full-page scanline/RGB overlay created in V12–V14.
+*/
+.psychedelic-mode::after {
+    content: none !important;
+    display: none !important;
+    animation: none !important;
+}
+
+/*
+Decrease line tearing substantially:
+smaller offsets, much rarer occurrence, and slower cycle.
+*/
+.hero-pair img,
+.gallery-row img {
+    animation:
+        chromaSplit14 2.8s ease-in-out infinite alternate,
+        highlightBloom 8.5s ease-in-out infinite,
+        lineTear15 15s steps(1, end) infinite !important;
+}
+
+@keyframes lineTear15 {
+    0%, 96%, 100% {
+        transform: translateX(0);
+    }
+    96.4% {
+        transform: translateX(1px);
+    }
+    96.8% {
+        transform: translateX(-2px);
+    }
+    97.2% {
+        transform: translateX(1px);
+    }
+}
+
+/*
+Warm global wash:
+amber, magenta, and red-orange fields drift gently over the entire page.
+No scanlines, no VHS texture.
+*/
+.psychedelic-mode::before {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    z-index: -8;
+    pointer-events: none;
+    opacity: .42 !important;
+    background:
+        radial-gradient(circle at 18% 28%,
+            rgba(255, 106, 20, .52),
+            transparent 38%),
+        radial-gradient(circle at 78% 24%,
+            rgba(255, 30, 120, .38),
+            transparent 42%),
+        radial-gradient(circle at 52% 82%,
+            rgba(255, 190, 45, .34),
+            transparent 46%),
+        linear-gradient(125deg,
+            rgba(92, 18, 0, .28),
+            rgba(75, 0, 55, .22),
+            rgba(255, 92, 0, .18));
+    mix-blend-mode: screen;
+    filter: saturate(130%);
+    animation:
+        warmDrift 13s ease-in-out infinite alternate,
+        warmPulse 8.5s ease-in-out infinite;
+}
+
+/*
+A soft heat-haze / warble applied to the whole content area.
+This stays subtle to avoid making text unreadable.
+*/
+.psychedelic-mode main,
+.psychedelic-mode header {
+    transform-origin: 50% 40%;
+    animation: pageWarble 10.5s ease-in-out infinite alternate;
+}
+
+/*
+Warm chromatic bleed on images.
+Less cyan-heavy than the VHS version; more amber/red/magenta.
+*/
+.hero-pair img,
+.gallery-row img {
+    box-shadow:
+        4px 0 0 -2px rgba(255, 91, 30, .28),
+        -4px 0 0 -2px rgba(255, 20, 135, .22),
+        0 16px 42px rgba(20, 0, 12, .52);
+}
+
+/*
+Warm highlight blooms that come and go.
+*/
+@keyframes highlightBloom {
+    0%, 76%, 100% {
+        opacity: 1;
+    }
+    82% {
+        filter:
+            brightness(1.09)
+            contrast(1.025)
+            saturate(1.22)
+            sepia(.10)
+            drop-shadow(0 0 6px rgba(255, 145, 45, .24));
+    }
+    89% {
+        filter:
+            brightness(1.16)
+            contrast(1.04)
+            saturate(1.32)
+            sepia(.14)
+            drop-shadow(0 0 12px rgba(255, 110, 35, .34));
+    }
+    94% {
+        filter:
+            brightness(1.08)
+            contrast(1.02)
+            saturate(1.20)
+            sepia(.08)
+            drop-shadow(0 0 5px rgba(255, 185, 70, .20));
+    }
+}
+
+/*
+Slightly warm the warped background photographs and make their motion
+feel irregular rather than mechanically linear.
+*/
+.photo-bg {
+    filter:
+        saturate(220%)
+        contrast(112%)
+        sepia(.10)
+        hue-rotate(var(--bg-hue, 0deg));
+    mix-blend-mode: screen;
+}
+
+.photo-bg-1 { animation-duration: 11s, 8s, 6s !important; }
+.photo-bg-2 { animation-duration: 14s, 10s, 7s !important; }
+.photo-bg-3 { animation-duration: 12.5s, 9s, 8s !important; }
+.photo-bg-4 { animation-duration: 16s, 11s, 6.5s !important; }
+.photo-bg-5 { animation-duration: 13.5s, 9.5s, 8.5s !important; }
+.photo-bg-6 { animation-duration: 15s, 10.5s, 7.5s !important; }
+
+@keyframes warmDrift {
+    0% {
+        transform:
+            translate3d(-3vw, -2vh, 0)
+            rotate(-2deg)
+            scale(1.02);
+        filter: saturate(118%) hue-rotate(-8deg);
+    }
+    45% {
+        transform:
+            translate3d(4vw, 3vh, 0)
+            rotate(2.5deg)
+            scale(1.08);
+        filter: saturate(145%) hue-rotate(9deg);
+    }
+    100% {
+        transform:
+            translate3d(-1vw, 6vh, 0)
+            rotate(-1deg)
+            scale(1.04);
+        filter: saturate(128%) hue-rotate(-3deg);
+    }
+}
+
+@keyframes warmPulse {
+    0%, 100% {
+        opacity: .27;
+    }
+    38% {
+        opacity: .48;
+    }
+    71% {
+        opacity: .34;
+    }
+}
+
+@keyframes pageWarble {
+    0% {
+        transform:
+            translate3d(-.35px, 0, 0)
+            skewX(-.08deg)
+            scaleX(1.000);
+    }
+    33% {
+        transform:
+            translate3d(.45px, -.25px, 0)
+            skewX(.12deg)
+            scaleX(1.0015);
+    }
+    67% {
+        transform:
+            translate3d(-.15px, .35px, 0)
+            skewX(-.05deg)
+            scaleY(1.0012);
+    }
+    100% {
+        transform:
+            translate3d(.30px, 0, 0)
+            skewX(.07deg)
+            scaleX(.999);
+    }
+}
+
+@media (max-width: 800px) {
+    .psychedelic-mode::before {
+        opacity: .34 !important;
+        animation-duration: 16s, 10s;
+    }
+
+    .psychedelic-mode main,
+    .psychedelic-mode header {
+        animation-duration: 13s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .psychedelic-mode::before,
+    .psychedelic-mode main,
+    .psychedelic-mode header {
+        animation: none !important;
+    }
+}
+
+
+/* Version 16 psychedelic-mode exit button */
+.psychedelic-mode .end-trip {
+    border-color: rgba(255, 190, 65, 0.88);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 92, 20, 0.80),
+            rgba(255, 24, 128, 0.78)
+        );
+    box-shadow:
+        0 0 16px rgba(255, 92, 20, 0.28),
+        0 0 22px rgba(255, 24, 128, 0.22);
+}
+
+.psychedelic-mode .end-trip:hover,
+.psychedelic-mode .end-trip:focus-visible {
+    background: #ffffff;
+    color: #1b0711;
+}
+
+
+/* V16.1: guarantee only the current mode-switch button is visible */
+.mode-link,
+.psy-badge {
+    display: none !important;
+}
+
+.mode-switch::before,
+.mode-switch::after {
+    content: none !important;
+    display: none !important;
+}
