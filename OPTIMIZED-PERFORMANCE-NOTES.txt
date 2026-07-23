@@ -1,0 +1,10 @@
+Psychedelic performance build (v28)
+
+Changes:
+- Rebuilt all eight MP4 loops at continuous 24 fps using frame blending to remove the stepped capture cadence.
+- Reduced photo videos from 900x1124 to 600x750.
+- Reduced desktop background from 1440x900 to 960x600.
+- Reduced mobile background from 480x900 to 360x676.
+- Preserved autoplay retry and offscreen pause behavior.
+
+Replace the repository files with this folder, commit, and push.
